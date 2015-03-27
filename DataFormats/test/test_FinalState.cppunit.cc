@@ -1,15 +1,15 @@
 /*
- * Test the PATFinalState object
+ * Test the FinalState object
  */
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <Utilities/Testing/interface/CppUnit_testdriver.icpp>
 #include <vector>
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateEvent.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateEvent.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATDiLeptonFinalStates.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATTriLeptonFinalStates.h"
+#include "FinalStateAnalysis/DataFormats/interface/DiLeptonFinalStates.h"
+#include "FinalStateAnalysis/DataFormats/interface/TriLeptonFinalStates.h"
 
 #include "DataFormats/Math/interface/Vector3D.h"
 
@@ -62,8 +62,8 @@ class testFinalState: public CppUnit::TestFixture {
     edm::Ptr<pat::MET> mockMETPtr_;
 
     ProductID eventPID;
-    std::vector<PATFinalStateEvent> mockEventColl_;
-    edm::Ptr<PATFinalStateEvent> mockEventPtr_;
+    std::vector<FinalStateEvent> mockEventColl_;
+    edm::Ptr<FinalStateEvent> mockEventPtr_;
 
     edm::Ptr<reco::Vertex> nullVtx_;
 
@@ -123,10 +123,10 @@ void testFinalState::setUp() {
   TestHandle<std::vector<pat::MET> > metHandle(&mockMETColl_, metPID);
   mockMETPtr_ = Ptr<pat::MET>(metHandle, 0);
 
-  PATFinalStateEvent mockEvent(nullVtx_, mockMETPtr_);
+  FinalStateEvent mockEvent(nullVtx_, mockMETPtr_);
   mockEventColl_.push_back(mockEvent);
-  TestHandle<std::vector<PATFinalStateEvent> > eventHandle(&mockEventColl_, eventPID);
-  mockEventPtr_ = Ptr<PATFinalStateEvent>(eventHandle, 0);
+  TestHandle<std::vector<FinalStateEvent> > eventHandle(&mockEventColl_, eventPID);
+  mockEventPtr_ = Ptr<FinalStateEvent>(eventHandle, 0);
 
   for (size_t i = 10; i < 100; i += 10) {
     reco::LeafCandidate cand;
@@ -182,7 +182,7 @@ void testFinalState::testDiLepton() {
 
 
   // Explicitly check that all the methods are const
-  const PATElecMuFinalState finalState(mockElectronPtr_, mockMuonPtr1_,
+  const ElecMuFinalState finalState(mockElectronPtr_, mockMuonPtr1_,
       mockEventPtr_);
 
   // Check charge defintion
@@ -360,7 +360,7 @@ void testFinalState::testDiLepton() {
 }
 
 void testFinalState::testTriLepton() {
-  const PATElecMuMuFinalState finalState(mockElectronPtr_, mockMuonPtr1_, mockMuonPtr2_,
+  const ElecMuMuFinalState finalState(mockElectronPtr_, mockMuonPtr1_, mockMuonPtr2_,
       mockEventPtr_);
 
   CPPUNIT_ASSERT(finalState.daughter(0) == mockElectronPtr_.get());
@@ -370,7 +370,7 @@ void testFinalState::testTriLepton() {
   CPPUNIT_ASSERT(finalState.vertexObject() == nullVtx_);
 
   {
-    PATFinalStateProxy subcand = finalState.subcand(1, 2);
+    FinalStateProxy subcand = finalState.subcand(1, 2);
     reco::Candidate::LorentzVector expectP4 = mockMuonPtr1_->p4() + mockMuonPtr2_->p4();
     int nDaughters = subcand->numberOfDaughters();
     CPPUNIT_ASSERT_EQUAL(2, nDaughters);
@@ -398,10 +398,10 @@ void testFinalState::testTriLepton() {
 }
 
 void testFinalState::testOverlaps() {
-  PATElecMuMuFinalState finalStateNonConst(mockElectronPtr_, mockMuonPtr1_, mockMuonPtr2_,
+  ElecMuMuFinalState finalStateNonConst(mockElectronPtr_, mockMuonPtr1_, mockMuonPtr2_,
       mockEventPtr_);
   finalStateNonConst.setOverlaps("jets", mockJetEdmPtrVector_);
-  const PATElecMuMuFinalState finalState(finalStateNonConst);
+  const ElecMuMuFinalState finalState(finalStateNonConst);
   CPPUNIT_ASSERT(finalState.hasOverlaps("jets"));
   CPPUNIT_ASSERT(finalState.overlaps("jets") == mockJetEdmPtrVector_);
   // No filter
@@ -436,9 +436,9 @@ void testFinalState::testOverlaps() {
 }
 
 void testFinalState::testIndexGetter() {
-  PATElecMuMuFinalState finalStateNonConst(mockElectronPtr_, mockMuonPtr1_, mockMuonPtr2_,
+  ElecMuMuFinalState finalStateNonConst(mockElectronPtr_, mockMuonPtr1_, mockMuonPtr2_,
       mockEventPtr_);
-  const PATElecMuMuFinalState& finalState = finalStateNonConst;
+  const ElecMuMuFinalState& finalState = finalStateNonConst;
   CPPUNIT_ASSERT(mockMuonPtr2_->pt() > mockMuonPtr1_->pt());
   CPPUNIT_ASSERT(mockMuonPtr1_->pt() > mockElectronPtr_->pt());
   std::vector<size_t> indices = finalState.indicesByPt();

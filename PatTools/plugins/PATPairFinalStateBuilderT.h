@@ -5,9 +5,9 @@
 #include "FWCore/Framework/interface/EDProducer.h"
 
 #include "CommonTools/Utils/interface/StringCutObjectSelector.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateEvent.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATPairFinalStateT.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateEvent.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateT.h"
 
 template<class FinalStatePair>
 class PATPairFinalStateBuilderT : public edm::EDProducer {
@@ -21,7 +21,7 @@ class PATPairFinalStateBuilderT : public edm::EDProducer {
     edm::InputTag leg1Src_;
     edm::InputTag leg2Src_;
     edm::InputTag evtSrc_;
-    StringCutObjectSelector<PATFinalState> cut_;
+    StringCutObjectSelector<FinalState> cut_;
 };
 
 template<class FinalStatePair>
@@ -38,9 +38,9 @@ template<class FinalStatePair> void
 PATPairFinalStateBuilderT<FinalStatePair>::produce(
     edm::Event& evt, const edm::EventSetup& es) {
 
-  edm::Handle<edm::View<PATFinalStateEvent> > fsEvent;
+  edm::Handle<edm::View<FinalStateEvent> > fsEvent;
   evt.getByLabel(evtSrc_, fsEvent);
-  edm::Ptr<PATFinalStateEvent> evtPtr = fsEvent->ptrAt(0);
+  edm::Ptr<FinalStateEvent> evtPtr = fsEvent->ptrAt(0);
   assert(evtPtr.isNonnull());
 
   std::auto_ptr<FinalStatePairCollection> output(new FinalStatePairCollection);

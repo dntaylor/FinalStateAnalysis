@@ -1,22 +1,22 @@
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateFwd.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateProxy.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateProxy.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATMultiCandFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATMultiCandFinalStateFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/MultiCandFinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/MultiCandFinalStateFwd.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateEvent.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateEvent.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateLS.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateLS.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATSingleFinalStates.h"
+#include "FinalStateAnalysis/DataFormats/interface/SingleFinalStates.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATDiLeptonFinalStates.h"
+#include "FinalStateAnalysis/DataFormats/interface/DiLeptonFinalStates.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATTriLeptonFinalStates.h"
+#include "FinalStateAnalysis/DataFormats/interface/TriLeptonFinalStates.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATQuadLeptonFinalStates.h"
+#include "FinalStateAnalysis/DataFormats/interface/QuadLeptonFinalStates.h"
 
 #include "FinalStateAnalysis/DataAlgos/interface/VBFVariables.h"
 
@@ -46,78 +46,78 @@ namespace {
     VBFVariables dummyVBFVars;
 
     // shared pointer wrapper class
-    PATFinalStateProxy proxyDummy;
+    FinalStateProxy proxyDummy;
 
     // base classes
-    FWD_ABS_CLASSDECL(PATFinalState)
-    FWD_CLASSDECL(PATFinalStateEvent)
-    FWD_CLASSDECL(PATFinalStateLS)
+    FWD_ABS_CLASSDECL(FinalState)
+    FWD_CLASSDECL(FinalStateEvent)
+    FWD_CLASSDECL(FinalStateLS)
 
     // n-cand state
-    FWD_CLASSDECL(PATMultiCandFinalState)
+    FWD_CLASSDECL(MultiCandFinalState)
 
     // single final states
-    FWD_MIN_CLASSDECL(PATElecFinalState)
-    FWD_MIN_CLASSDECL(PATMuFinalState)
-    FWD_MIN_CLASSDECL(PATTauFinalState)
-    FWD_MIN_CLASSDECL(PATPhoFinalState)
-    FWD_MIN_CLASSDECL(PATJetFinalState)
+    FWD_MIN_CLASSDECL(ElecFinalState)
+    FWD_MIN_CLASSDECL(MuFinalState)
+    FWD_MIN_CLASSDECL(TauFinalState)
+    FWD_MIN_CLASSDECL(PhoFinalState)
+    FWD_MIN_CLASSDECL(JetFinalState)
 
     // pair final states
-    FWD_MIN_CLASSDECL(PATElecElecFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuFinalState)
-    FWD_MIN_CLASSDECL(PATElecTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecPhoFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuFinalState)
-    FWD_MIN_CLASSDECL(PATMuTauFinalState)
-    FWD_MIN_CLASSDECL(PATMuPhoFinalState)
-    FWD_MIN_CLASSDECL(PATTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATTauPhoFinalState)
-    FWD_MIN_CLASSDECL(PATPhoPhoFinalState)
-    FWD_MIN_CLASSDECL(PATMuJetFinalState)
-    FWD_MIN_CLASSDECL(PATElecJetFinalState)
+    FWD_MIN_CLASSDECL(ElecElecFinalState)
+    FWD_MIN_CLASSDECL(ElecMuFinalState)
+    FWD_MIN_CLASSDECL(ElecTauFinalState)
+    FWD_MIN_CLASSDECL(ElecPhoFinalState)
+    FWD_MIN_CLASSDECL(MuMuFinalState)
+    FWD_MIN_CLASSDECL(MuTauFinalState)
+    FWD_MIN_CLASSDECL(MuPhoFinalState)
+    FWD_MIN_CLASSDECL(TauTauFinalState)
+    FWD_MIN_CLASSDECL(TauPhoFinalState)
+    FWD_MIN_CLASSDECL(PhoPhoFinalState)
+    FWD_MIN_CLASSDECL(MuJetFinalState)
+    FWD_MIN_CLASSDECL(ElecJetFinalState)
 
     // triplet final states
-    FWD_MIN_CLASSDECL(PATElecElecElecFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecMuFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecPhoFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuMuFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuPhoFinalState)
-    FWD_MIN_CLASSDECL(PATElecTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecPhoPhoFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuMuFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuTauFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuPhoFinalState)
-    FWD_MIN_CLASSDECL(PATMuTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATMuPhoPhoFinalState)
-    FWD_MIN_CLASSDECL(PATMuJetJetFinalState)
-    FWD_MIN_CLASSDECL(PATTauTauTauFinalState)
+    FWD_MIN_CLASSDECL(ElecElecElecFinalState)
+    FWD_MIN_CLASSDECL(ElecElecMuFinalState)
+    FWD_MIN_CLASSDECL(ElecElecTauFinalState)
+    FWD_MIN_CLASSDECL(ElecElecPhoFinalState)
+    FWD_MIN_CLASSDECL(ElecMuMuFinalState)
+    FWD_MIN_CLASSDECL(ElecMuTauFinalState)
+    FWD_MIN_CLASSDECL(ElecMuPhoFinalState)
+    FWD_MIN_CLASSDECL(ElecTauTauFinalState)
+    FWD_MIN_CLASSDECL(ElecPhoPhoFinalState)
+    FWD_MIN_CLASSDECL(MuMuMuFinalState)
+    FWD_MIN_CLASSDECL(MuMuTauFinalState)
+    FWD_MIN_CLASSDECL(MuMuPhoFinalState)
+    FWD_MIN_CLASSDECL(MuTauTauFinalState)
+    FWD_MIN_CLASSDECL(MuPhoPhoFinalState)
+    FWD_MIN_CLASSDECL(MuJetJetFinalState)
+    FWD_MIN_CLASSDECL(TauTauTauFinalState)
 
     // quad final states
-    FWD_MIN_CLASSDECL(PATElecElecElecElecFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecElecMuFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecElecTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecElecPhoFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecMuMuFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecMuTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecMuPhoFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecElecPhoPhoFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuMuMuFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuMuTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuMuPhoFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecTauTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATElecMuPhoPhoFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuMuMuFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuMuTauFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuMuPhoFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATMuTauTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATTauTauTauTauFinalState)
-    FWD_MIN_CLASSDECL(PATMuMuPhoPhoFinalState)
+    FWD_MIN_CLASSDECL(ElecElecElecElecFinalState)
+    FWD_MIN_CLASSDECL(ElecElecElecMuFinalState)
+    FWD_MIN_CLASSDECL(ElecElecElecTauFinalState)
+    FWD_MIN_CLASSDECL(ElecElecElecPhoFinalState)
+    FWD_MIN_CLASSDECL(ElecElecMuMuFinalState)
+    FWD_MIN_CLASSDECL(ElecElecMuTauFinalState)
+    FWD_MIN_CLASSDECL(ElecElecMuPhoFinalState)
+    FWD_MIN_CLASSDECL(ElecElecTauTauFinalState)
+    FWD_MIN_CLASSDECL(ElecElecPhoPhoFinalState)
+    FWD_MIN_CLASSDECL(ElecMuMuMuFinalState)
+    FWD_MIN_CLASSDECL(ElecMuMuTauFinalState)
+    FWD_MIN_CLASSDECL(ElecMuMuPhoFinalState)
+    FWD_MIN_CLASSDECL(ElecMuTauTauFinalState)
+    FWD_MIN_CLASSDECL(ElecTauTauTauFinalState)
+    FWD_MIN_CLASSDECL(ElecMuPhoPhoFinalState)
+    FWD_MIN_CLASSDECL(MuMuMuMuFinalState)
+    FWD_MIN_CLASSDECL(MuMuMuTauFinalState)
+    FWD_MIN_CLASSDECL(MuMuMuPhoFinalState)
+    FWD_MIN_CLASSDECL(MuMuTauTauFinalState)
+    FWD_MIN_CLASSDECL(MuTauTauTauFinalState)
+    FWD_MIN_CLASSDECL(TauTauTauTauFinalState)
+    FWD_MIN_CLASSDECL(MuMuPhoPhoFinalState)
 
   };
 }

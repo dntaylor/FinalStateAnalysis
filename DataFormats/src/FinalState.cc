@@ -1,6 +1,6 @@
 #include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
 #include "FinalStateAnalysis/DataFormats/interface/FinalStateEvent.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATMultiCandFinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/MultiCandFinalState.h"
 
 #include "FinalStateAnalysis/DataAlgos/interface/helpers.h"
 #include "FinalStateAnalysis/DataAlgos/interface/CollectionFilter.h"
@@ -534,7 +534,7 @@ double FinalState::pZetaVis(int i, int j) const {
       met()->px(), met()->py()).second;
 }
 
-std::vector<reco::CandidatePtr> TFinalState::extras(
+std::vector<reco::CandidatePtr> FinalState::extras(
     const std::string& label, const std::string& filter) const {
   // maybe this needs to be optimized
   StringCutObjectSelector<reco::Candidate> cut(filter, true);

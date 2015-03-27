@@ -1,11 +1,11 @@
 #include "FinalStateAnalysis/PatTools/plugins/PATSingleFinalStateBuilderT.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATSingleFinalStates.h"
+#include "FinalStateAnalysis/DataFormats/interface/SingleFinalStates.h"
 
-typedef PATSingleFinalStateBuilderT<PATElecFinalState> PATElecFinalStateProducer;
-typedef PATSingleFinalStateBuilderT<PATMuFinalState> PATMuFinalStateProducer;
-typedef PATSingleFinalStateBuilderT<PATTauFinalState> PATTauFinalStateProducer;
-typedef PATSingleFinalStateBuilderT<PATPhoFinalState> PATPhoFinalStateProducer;
-typedef PATSingleFinalStateBuilderT<PATJetFinalState> PATJetFinalStateProducer;
+typedef PATSingleFinalStateBuilderT<ElecFinalState> PATElecFinalStateProducer;
+typedef PATSingleFinalStateBuilderT<MuFinalState> PATMuFinalStateProducer;
+typedef PATSingleFinalStateBuilderT<TauFinalState> PATTauFinalStateProducer;
+typedef PATSingleFinalStateBuilderT<PhoFinalState> PATPhoFinalStateProducer;
+typedef PATSingleFinalStateBuilderT<JetFinalState> PATJetFinalStateProducer;
 
 #include "FWCore/Framework/interface/MakerMacros.h"
 DEFINE_FWK_MODULE(PATElecFinalStateProducer);

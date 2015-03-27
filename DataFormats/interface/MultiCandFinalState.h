@@ -1,19 +1,19 @@
-#ifndef FinalStateAnalysis_DataFormats_PATMultiCandFinalState_h
-#define FinalStateAnalysis_DataFormats_PATMultiCandFinalState_h
+#ifndef FinalStateAnalysis_DataFormats_MultiCandFinalState_h
+#define FinalStateAnalysis_DataFormats_MultiCandFinalState_h
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateEvent.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateEvent.h"
 #include "DataFormats/Candidate/interface/CandidateFwd.h"
 #include "DataFormats/Candidate/interface/Candidate.h"
 
-class PATMultiCandFinalState : public PATFinalState {
+class MultiCandFinalState : public FinalState {
   public:
-    PATMultiCandFinalState();
+    MultiCandFinalState();
 
-    PATMultiCandFinalState(const std::vector<reco::CandidatePtr>& cands,
-        const edm::Ptr<PATFinalStateEvent>& evt);
+    MultiCandFinalState(const std::vector<reco::CandidatePtr>& cands,
+        const edm::Ptr<FinalStateEvent>& evt);
 
-    virtual PATMultiCandFinalState* clone() const;
+    virtual MultiCandFinalState* clone() const;
 
     virtual const reco::Candidate* daughterUnsafe(size_t i) const;
 
@@ -38,4 +38,4 @@ class PATMultiCandFinalState : public PATFinalState {
     std::vector<reco::CandidatePtr> cands_; // old way
 };
 
-#endif /* end of include guard: FinalStateAnalysis_DataFormats_PATMultiCandFinalState_h */
+#endif /* end of include guard: FinalStateAnalysis_DataFormats_MultiCandFinalState_h */

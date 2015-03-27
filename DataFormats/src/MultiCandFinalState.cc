@@ -1,4 +1,4 @@
-#include "FinalStateAnalysis/DataFormats/interface/PATMultiCandFinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/MultiCandFinalState.h"
 
 #include "DataFormats/PatCandidates/interface/Electron.h"
 #include "DataFormats/PatCandidates/interface/Muon.h"
@@ -9,12 +9,12 @@
 
 #include "TLorentzVector.h"
 
-PATMultiCandFinalState::PATMultiCandFinalState():PATFinalState(){}
+MultiCandFinalState::MultiCandFinalState():FinalState(){}
 
-PATMultiCandFinalState::PATMultiCandFinalState(
+MultiCandFinalState::MultiCandFinalState(
     const std::vector<reco::CandidatePtr>& cands,
-    const edm::Ptr<PATFinalStateEvent>& evt):
-  PATFinalState(0, reco::Candidate::LorentzVector(), evt),
+    const edm::Ptr<FinalStateEvent>& evt):
+  FinalState(0, reco::Candidate::LorentzVector(), evt),
   cands_(cands) {
   
   // Setup p4 in base class
@@ -28,11 +28,11 @@ PATMultiCandFinalState::PATMultiCandFinalState(
   this->setP4(totalP4);
 }
 
-PATMultiCandFinalState* PATMultiCandFinalState::clone() const {
-  return new PATMultiCandFinalState(*this);
+MultiCandFinalState* MultiCandFinalState::clone() const {
+  return new MultiCandFinalState(*this);
 }
 
-const reco::Candidate* PATMultiCandFinalState::daughterUnsafe(size_t i) const {
+const reco::Candidate* MultiCandFinalState::daughterUnsafe(size_t i) const {
   try {
     return cands_.at(i).get();
   } catch ( std::out_of_range &oor) {
@@ -42,7 +42,7 @@ const reco::Candidate* PATMultiCandFinalState::daughterUnsafe(size_t i) const {
 }
 
 const reco::CandidatePtr
-PATMultiCandFinalState::daughterPtrUnsafe(size_t i) const {
+MultiCandFinalState::daughterPtrUnsafe(size_t i) const {
   try {
     return cands_.at(i);
   } catch ( std::out_of_range &oor) {
@@ -51,7 +51,7 @@ PATMultiCandFinalState::daughterPtrUnsafe(size_t i) const {
   }
 }
 
-reco::CandidatePtr PATMultiCandFinalState::daughterUserCandUnsafe(size_t i,
+reco::CandidatePtr MultiCandFinalState::daughterUserCandUnsafe(size_t i,
     const std::string& tag) const {
   reco::CandidatePtr theCand;
 
@@ -94,7 +94,7 @@ reco::CandidatePtr PATMultiCandFinalState::daughterUserCandUnsafe(size_t i,
   }
 }
 
-const reco::CandidatePtrVector& PATMultiCandFinalState::daughterOverlaps(
+const reco::CandidatePtrVector& MultiCandFinalState::daughterOverlaps(
     size_t i, const std::string& label) const {
   reco::CandidatePtr theCand; // will throw OOB exception
 
@@ -137,7 +137,7 @@ const reco::CandidatePtrVector& PATMultiCandFinalState::daughterOverlaps(
   }
 }
 
-const double PATMultiCandFinalState::daughterCosThetaStar(
+const double MultiCandFinalState::daughterCosThetaStar(
       size_t i) const
 {
   reco::Candidate::LorentzVector totalP4 = p4();

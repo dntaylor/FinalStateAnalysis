@@ -1,4 +1,4 @@
-<bin   name="TestPATFinalState" file="test_FinalState.cppunit.cc">
+<bin   name="TestFinalState" file="test_FinalState.cppunit.cc">
   <use   name="root"/>
   <use   name="FinalStateAnalysis/DataFormats"/>
   <use   name="DataFormats/Math"/>
