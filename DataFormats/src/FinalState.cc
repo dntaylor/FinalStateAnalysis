@@ -662,7 +662,7 @@ FinalState::subcand(int i, int j, int x, int y, int z) const {
     output.push_back(daughterPtr(z));
 
   return FinalStateProxy(
-      new PATMultiCandFinalState(output, evt()));
+      new MultiCandFinalState(output, evt()));
 }
 
 FinalStateProxy
@@ -693,7 +693,7 @@ FinalState::subcandfsr( int i, int j, const std::string& fsrLabel ) const
 	    output.push_back(this->userCand(userCandList[i]));
 	}
     }
-  return FinalStateProxy(new PATMultiCandFinalState(output, evt()));
+  return FinalStateProxy(new MultiCandFinalState(output, evt()));
 }
 
 const reco::CandidatePtr FinalState::bestFSROfZ(int i, int j, const std::string& fsrLabel) const
@@ -872,7 +872,7 @@ FinalStateProxy
 FinalState::subcand(const std::string& tags) const {
   const std::vector<reco::CandidatePtr> daus = daughterPtrs(tags);
   return FinalStateProxy(
-      new PATMultiCandFinalState(daus, evt()));
+      new MultiCandFinalState(daus, evt()));
 }
 
 FinalStateProxy
@@ -889,7 +889,7 @@ FinalState::subcand(const std::string& tags,
     toAdd.push_back(daus[i]);
   }
   return FinalStateProxy(
-      new PATMultiCandFinalState(toAdd, evt()));
+      new MultiCandFinalState(toAdd, evt()));
 }
 
 bool FinalState::likeSigned(int i, int j) const {

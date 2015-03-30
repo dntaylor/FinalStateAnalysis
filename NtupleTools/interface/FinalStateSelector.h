@@ -4,15 +4,15 @@
 #include "PhysicsTools/SelectorUtils/interface/Selector.h"
 #include "CommonTools/Utils/interface/StringCutObjectSelector.h"
 
-class PATFinalState;
-typedef std::vector<const PATFinalState*> PATFinalStatePtrs;
+class FinalState;
+typedef std::vector<const FinalState*> FinalStatePtrs;
 namespace edm {
   class ParameterSet;
 }
 
-class PATFinalStateSelection : public Selector<PATFinalStatePtrs> {
+class FinalStateSelection : public Selector<FinalStatePtrs> {
   public:
-    PATFinalStateSelection(const edm::ParameterSet& pset);
+    FinalStateSelection(const edm::ParameterSet& pset);
   private:
 }
 

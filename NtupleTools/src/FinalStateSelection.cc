@@ -1,6 +1,6 @@
-#include "FinalStateAnalysis/NtupleTools/interface/PATFinalStateSelection.h"
+#include "FinalStateAnalysis/NtupleTools/interface/FinalStateSelection.h"
 #include "CommonTools/Utils/interface/TFileDirectory.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
 #include "FinalStateAnalysis/Utilities/interface/CutFlow.h"
 #include "FWCore/Utilities/interface/RegexMatch.h"
 
@@ -15,7 +15,7 @@ namespace {
   };
 }
 
-PATFinalStateSelection::PATFinalStateSelection(
+FinalStateSelection::FinalStateSelection(
     const edm::ParameterSet& pset, TFileDirectory& fs) {
   typedef std::vector<edm::ParameterSet> VPSet;
 
@@ -80,7 +80,7 @@ PATFinalStateSelection::PATFinalStateSelection(
   edm::ParameterSet final = pset.getParameterSet("final");
 
   if (final.exists("sort")) {
-    finalSort_.reset(new StringObjectSorter<PATFinalState>(
+    finalSort_.reset(new StringObjectSorter<FinalState>(
           final.getParameter<std::string>("sort")));
   }
   take_ = final.getParameter<unsigned int>("take");
@@ -88,11 +88,11 @@ PATFinalStateSelection::PATFinalStateSelection(
   eventView_ = pset.getParameter<bool>("EventView");
   if( eventView_ ){
     finalPlotsEventView_.reset(
-                      new ek::HistoFolder<PATFinalStatePtrs> 
+                      new ek::HistoFolder<FinalStatePtrs> 
 		      (final.getParameterSet("plot"),finaldir));    
     
   } else {
-    finalPlots_.reset(new ek::HistoFolder<PATFinalState>(
+    finalPlots_.reset(new ek::HistoFolder<FinalState>(
 		      final.getParameterSet("plot"), finaldir));
   }
 
@@ -101,12 +101,12 @@ PATFinalStateSelection::PATFinalStateSelection(
   cutFlow_.reset(new ek::CutFlow(bits_, "cutFlow", fs));
 }
 
-PATFinalStateSelection::~PATFinalStateSelection(){}
+FinalStateSelection::~FinalStateSelection(){}
 
-bool PATFinalStateSelection::operator()(const PATFinalStatePtrs& input,
+bool FinalStateSelection::operator()(const FinalStatePtrs& input,
     double weight) {
   // Copy the collection to one that we can modify.
-  PATFinalStatePtrs passingLocal(input);
+  FinalStatePtrs passingLocal(input);
 
 //  std::cout << "START" << std::endl;
 //  for (size_t i = 0; i < passingLocal.size(); ++i) {

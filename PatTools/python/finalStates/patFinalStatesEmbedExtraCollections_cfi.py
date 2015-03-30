@@ -7,7 +7,7 @@ from FinalStateAnalysis.PatTools.finalStates.patFinalStateMassResolutionEmbedder
      import finalStateMassResolutionEmbedder
 
 patFinalStatesEmbedTaus = cms.EDProducer(
-    "PATFinalStateOverlapEmbedder",
+    "FinalStateOverlapEmbedder",
     src = cms.InputTag("fixme"),
     toEmbedSrc = cms.InputTag("cleanPatTaus"),
     name = cms.string("extTaus"), # external taus
@@ -19,7 +19,7 @@ patFinalStatesEmbedTaus = cms.EDProducer(
 )
 
 patFinalStatesEmbedJets = cms.EDProducer(
-    "PATFinalStateOverlapEmbedder",
+    "FinalStateOverlapEmbedder",
     src = cms.InputTag("fixme"),
     toEmbedSrc = cms.InputTag("selectedPatJets"),
     name = cms.string("extJets"), # external taus
@@ -29,7 +29,7 @@ patFinalStatesEmbedJets = cms.EDProducer(
 )
 
 patFinalStatesEmbedJetschs = cms.EDProducer(
-    "PATFinalStateOverlapEmbedder",
+    "FinalStateOverlapEmbedder",
     src = cms.InputTag("fixme"),
     toEmbedSrc = cms.InputTag("selectedPatJetsAK5chsPF"),
     name = cms.string("extJetschs"), # external taus
@@ -41,7 +41,7 @@ patFinalStatesEmbedJetschs = cms.EDProducer(
 
 
 patFinalStatesEmbedMuons = cms.EDProducer(
-    "PATFinalStateOverlapEmbedder",
+    "FinalStateOverlapEmbedder",
     src = cms.InputTag("fixme"),
     toEmbedSrc = cms.InputTag("cleanPatMuons"),
     name = cms.string("extMuons"), # external taus
@@ -52,7 +52,7 @@ patFinalStatesEmbedMuons = cms.EDProducer(
 )
 
 patFinalStatesEmbedElectrons = cms.EDProducer(
-    "PATFinalStateOverlapEmbedder",
+    "FinalStateOverlapEmbedder",
     src = cms.InputTag("fixme"),
     toEmbedSrc = cms.InputTag("cleanPatElectrons"),
     name = cms.string("extElecs"), # external taus

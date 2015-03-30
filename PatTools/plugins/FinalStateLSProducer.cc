@@ -1,5 +1,5 @@
 /*
- * Produce the PATFinalStateLS objects that wrap the LumiSummary
+ * Produce the FinalStateLS objects that wrap the LumiSummary
  *
  * Author: Evan K. Friis UW Madison
  *
@@ -13,13 +13,13 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Framework/interface/EDProducer.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateLS.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateLS.h"
 #include "DataFormats/PatCandidates/interface/TriggerEvent.h"
 
-class PATFinalStateLSProducer : public edm::EDProducer {
+class FinalStateLSProducer : public edm::EDProducer {
   public:
-    PATFinalStateLSProducer(const edm::ParameterSet& pset);
-    virtual ~PATFinalStateLSProducer(){}
+    FinalStateLSProducer(const edm::ParameterSet& pset);
+    virtual ~FinalStateLSProducer(){}
     void produce(edm::Event& evt, const edm::EventSetup& es);
     void endLuminosityBlock(
         edm::LuminosityBlock& ls, const edm::EventSetup& es);
@@ -34,21 +34,21 @@ class PATFinalStateLSProducer : public edm::EDProducer {
     const edm::InputTag src_;
 };
 
-PATFinalStateLSProducer::PATFinalStateLSProducer(
+FinalStateLSProducer::FinalStateLSProducer(
     const edm::ParameterSet& pset):
   trigSrc_(pset.getParameter<edm::InputTag>("trigSrc")),
   xSec_(pset.getParameter<double>("xSec")),
   eventCount_(0),
   src_(pset.getParameter<edm::InputTag>("lumiSrc")) {
-    produces<PATFinalStateLS, edm::InLumi>();
+    produces<FinalStateLS, edm::InLumi>();
 }
 
 void
-PATFinalStateLSProducer::produce(edm::Event& evt, const edm::EventSetup& es) {
+FinalStateLSProducer::produce(edm::Event& evt, const edm::EventSetup& es) {
   eventCount_ += 1;
 }
 
-void PATFinalStateLSProducer::endLuminosityBlock(
+void FinalStateLSProducer::endLuminosityBlock(
     edm::LuminosityBlock& ls, const edm::EventSetup& es) {
 
   double intgRecLumi = -999;
@@ -69,7 +69,7 @@ void PATFinalStateLSProducer::endLuminosityBlock(
     intgRecLumi *= 1e6;
   }
 
-  std::auto_ptr<PATFinalStateLS> output(new PATFinalStateLS(
+  std::auto_ptr<FinalStateLS> output(new FinalStateLS(
         ls.id(), intgRecLumi, instLumi));
 
   ls.put(output);
@@ -78,4 +78,4 @@ void PATFinalStateLSProducer::endLuminosityBlock(
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(PATFinalStateLSProducer);
+DEFINE_FWK_MODULE(FinalStateLSProducer);

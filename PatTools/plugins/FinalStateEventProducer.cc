@@ -1,5 +1,5 @@
 /*
- * Produce a PATFinalStateEvent container with some interesting event info.
+ * Produce a FinalStateEvent container with some interesting event info.
  *
  * */
 
@@ -9,8 +9,8 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Framework/interface/EDProducer.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateEvent.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateEventFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateEvent.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateEventFwd.h"
 
 #include "DataFormats/TrackReco/interface/Track.h"
 #include "DataFormats/GsfTrackReco/interface/GsfTrack.h"
@@ -31,10 +31,10 @@
 #include "DataFormats/Math/interface/Error.h"
 
 
-class PATFinalStateEventProducer : public edm::EDProducer {
+class FinalStateEventProducer : public edm::EDProducer {
   public:
-    PATFinalStateEventProducer(const edm::ParameterSet& pset);
-    virtual ~PATFinalStateEventProducer(){}
+    FinalStateEventProducer(const edm::ParameterSet& pset);
+    virtual ~FinalStateEventProducer(){}
     void produce(edm::Event& evt, const edm::EventSetup& es);
 
   private:
@@ -104,7 +104,7 @@ class PATFinalStateEventProducer : public edm::EDProducer {
 
 };
 
-PATFinalStateEventProducer::PATFinalStateEventProducer(
+FinalStateEventProducer::FinalStateEventProducer(
     const edm::ParameterSet& pset) {
   // miniAOD check
   miniAOD_ = pset.exists("miniAOD") ?
@@ -161,7 +161,7 @@ PATFinalStateEventProducer::PATFinalStateEventProducer(
           ));
   }
 
-  produces<PATFinalStateEventCollection>();
+  produces<FinalStateEventCollection>();
 
   getLHEEventProduct_ = edm::GetterOfProducts<LHEEventProduct>(edm::ProcessMatch("*"), this);
   getGenEventInfoProduct_ = edm::GetterOfProducts<GenEventInfoProduct>(edm::ProcessMatch("*"), this);
@@ -173,7 +173,7 @@ PATFinalStateEventProducer::PATFinalStateEventProducer(
 }
 
 template<typename T> edm::RefProd<T>
-PATFinalStateEventProducer::getRefProd(const edm::InputTag& src,
+FinalStateEventProducer::getRefProd(const edm::InputTag& src,
     const edm::Event& evt) const {
   edm::Handle<T> handle;
   evt.getByLabel(src, handle);
@@ -187,10 +187,10 @@ PATFinalStateEventProducer::getRefProd(const edm::InputTag& src,
   return edm::RefProd<T>(handle);
 }
 
-void PATFinalStateEventProducer::produce(edm::Event& evt,
+void FinalStateEventProducer::produce(edm::Event& evt,
     const edm::EventSetup& es) {
-  std::auto_ptr<PATFinalStateEventCollection> output(
-      new PATFinalStateEventCollection);
+  std::auto_ptr<FinalStateEventCollection> output(
+      new FinalStateEventCollection);
 
   edm::Handle<double> rho;
   evt.getByLabel(rhoSrc_, rho);
@@ -335,17 +335,17 @@ void PATFinalStateEventProducer::produce(edm::Event& evt,
   if (!evt.isRealData())
     genParticlesRef = reco::GenParticleRefProd(genParticles);
 
-  PATFinalStateEvent* theEvent;
+  FinalStateEvent* theEvent;
   if (miniAOD_) {
     pat::TriggerEvent* trg = new pat::TriggerEvent();
-    theEvent = new PATFinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
+    theEvent = new FinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
       *trg, trigStandAlone, names, *trigPrescale, *trigResults, myPuInfo, genInfo, genParticlesRef, 
       evt.id(), genEventInfo, generatorFilter, evt.isRealData(), puScenario_,
       electronRefProd, muonRefProd, tauRefProd, jetRefProd,
       phoRefProd, pfRefProd, packedPFRefProd, trackRefProd, gsftrackRefProd, theMEts);
   }
   else {
-    theEvent = new PATFinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
+    theEvent = new FinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
       *trig, trigStandAlone, names, *trigPrescale, *trigResults, myPuInfo, genInfo, genParticlesRef, 
       evt.id(), genEventInfo, generatorFilter, evt.isRealData(), puScenario_,
       electronRefProd, muonRefProd, tauRefProd, jetRefProd,
@@ -370,4 +370,4 @@ void PATFinalStateEventProducer::produce(edm::Event& evt,
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(PATFinalStateEventProducer);
+DEFINE_FWK_MODULE(FinalStateEventProducer);

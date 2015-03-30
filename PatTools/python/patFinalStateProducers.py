@@ -1,6 +1,6 @@
 '''
 
-Functions to build the PATFinalStateEvents and friends on top of the PAT tuple
+Functions to build the FinalStateEvents and friends on top of the PAT tuple
 
 Arguments:
     process : the CMS process
@@ -58,7 +58,7 @@ def produce_final_states(process, collections, output_commands,
     except KeyError:
         fsrsrc = 'boostedFsrPhotons'
 
-    # Build the PATFinalStateEventObject
+    # Build the FinalStateEventObject
     if buildFSAEvent:
         process.load("FinalStateAnalysis.PatTools."
                      "finalStates.patFinalStateEventProducer_cfi")
@@ -292,7 +292,7 @@ def produce_final_states(process, collections, output_commands,
         # Do some trickery so the final module has a nice output name
         final_module_name = chain_sequence(embedder_seq, producer_name + "Raw")
         final_module = cms.EDProducer(
-            "PATFinalStateCopier", src=final_module_name)
+            "FinalStateCopier", src=final_module_name)
         setattr(process, producer_name, final_module)
         process.buildSingleObjects += final_module
         setattr(process, producer_name, final_module)
@@ -335,7 +335,7 @@ def produce_final_states(process, collections, output_commands,
         # Do some trickery so the final module has a nice output name
         final_module_name = chain_sequence(embedder_seq, producer_name + "Raw")
         final_module = cms.EDProducer(
-            "PATFinalStateCopier", src=final_module_name)
+            "FinalStateCopier", src=final_module_name)
         setattr(process, producer_name, final_module)
         process.buildDiObjects += final_module
         setattr(process, producer_name, final_module)
@@ -383,7 +383,7 @@ def produce_final_states(process, collections, output_commands,
         # Do some trickery so the final module has a nice output name
         final_module_name = chain_sequence(embedder_seq, producer_name + "Raw")
         final_module = cms.EDProducer(
-            "PATFinalStateCopier", src=final_module_name)
+            "FinalStateCopier", src=final_module_name)
         setattr(process, producer_name, final_module)
         process.buildTriObjects += final_module
         output_commands.append("*_%s_*_*" % producer_name)
@@ -434,7 +434,7 @@ def produce_final_states(process, collections, output_commands,
         # Do some trickery so the final module has a nice output name
         final_module_name = chain_sequence(embedder_seq, producer_name + "Raw")
         final_module = cms.EDProducer(
-            "PATFinalStateCopier", src=final_module_name)
+            "FinalStateCopier", src=final_module_name)
         setattr(process, producer_name, final_module)
         process.buildQuadObjects += final_module
         output_commands.append("*_%s_*_*" % producer_name)
@@ -489,7 +489,7 @@ def produce_final_states(process, collections, output_commands,
             # Do some trickery so the final module has a nice output name
             final_module_name = chain_sequence(embedder_seq, producer_name + "Raw")
             final_module = cms.EDProducer(
-                "PATFinalStateCopier", src=final_module_name)
+                "FinalStateCopier", src=final_module_name)
 
             setattr(process, producer_name, final_module)
             process.buildQuadHzzObjects += final_module

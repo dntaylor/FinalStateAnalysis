@@ -528,7 +528,7 @@ def configurePatTuple(process, isMC=True, **kwargs):
     ##                    ##
     ########################
 
-    # Now build the PATFinalStateLS object, which holds LumiSection info.
+    # Now build the FinalStateLS object, which holds LumiSection info.
     process.load(
         "FinalStateAnalysis.PatTools.finalStates.patFinalStateLSProducer_cfi")
     process.tuplize += process.finalStateLS
@@ -551,7 +551,7 @@ def configurePatTuple(process, isMC=True, **kwargs):
         'mvamet':  final_mvamet_collection,
     }
 
-    # Setup all the PATFinalState objects
+    # Setup all the FinalState objects
     produce_final_states(process, fs_daughter_inputs, output_commands,
                          process.tuplize, kwargs['puTag'],
                          zzMode=kwargs.get('zzMode', False))

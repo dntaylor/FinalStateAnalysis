@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 
 patFinalStateEventProducer = cms.EDProducer(
-    "PATFinalStateEventProducer",
+    "FinalStateEventProducer",
     miniAOD = cms.bool(False),
     rhoSrc = cms.InputTag('kt6PFJets', "rho"), #cms.InputTag("kt6PFJetsForRhoComputationVoronoi", "rho"),
     pvSrc = cms.InputTag("selectedPrimaryVertex"),

@@ -4,8 +4,8 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "FWCore/Framework/interface/EDProducer.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateFwd.h"
 #include "DataFormats/PatCandidates/interface/Electron.h"
 #include "DataFormats/PatCandidates/interface/Muon.h"
 #include "DataFormats/PatCandidates/interface/Tau.h"
@@ -42,25 +42,25 @@ namespace {
   }
 }
 
-class PATFinalStateVertexFitter : public edm::EDProducer {
+class FinalStateVertexFitter : public edm::EDProducer {
   public:
-    PATFinalStateVertexFitter(const edm::ParameterSet& pset);
-    virtual ~PATFinalStateVertexFitter(){}
+    FinalStateVertexFitter(const edm::ParameterSet& pset);
+    virtual ~FinalStateVertexFitter(){}
     void produce(edm::Event& evt, const edm::EventSetup& es);
   private:
     edm::InputTag src_;
     bool enable_;
 };
 
-PATFinalStateVertexFitter::PATFinalStateVertexFitter(const edm::ParameterSet& pset) {
+FinalStateVertexFitter::FinalStateVertexFitter(const edm::ParameterSet& pset) {
   src_ = pset.getParameter<edm::InputTag>("src");
   enable_ = pset.getParameter<bool>("enable");
-  produces<PATFinalStateCollection>();
+  produces<FinalStateCollection>();
 }
-void PATFinalStateVertexFitter::produce(edm::Event& evt, const edm::EventSetup& es) {
-  std::auto_ptr<PATFinalStateCollection> output(new PATFinalStateCollection);
+void FinalStateVertexFitter::produce(edm::Event& evt, const edm::EventSetup& es) {
+  std::auto_ptr<FinalStateCollection> output(new FinalStateCollection);
 
-  edm::Handle<edm::View<PATFinalState> > finalStates;
+  edm::Handle<edm::View<FinalState> > finalStates;
   evt.getByLabel(src_, finalStates);
 
   edm::ESHandle<TransientTrackBuilder> trackBuilderHandle;
@@ -69,7 +69,7 @@ void PATFinalStateVertexFitter::produce(edm::Event& evt, const edm::EventSetup& 
   }
 
   for (size_t i = 0; i < finalStates->size(); ++i) {
-    PATFinalState * clone = finalStates->at(i).clone();
+    FinalState * clone = finalStates->at(i).clone();
     assert(clone);
     if (enable_) {
       std::vector<reco::TransientTrack> tracks;
@@ -97,4 +97,4 @@ void PATFinalStateVertexFitter::produce(edm::Event& evt, const edm::EventSetup& 
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(PATFinalStateVertexFitter);
+DEFINE_FWK_MODULE(FinalStateVertexFitter);

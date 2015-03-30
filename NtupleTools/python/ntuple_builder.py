@@ -346,7 +346,7 @@ def make_ntuple(*legs, **kwargs):
 
     # Now build our analyzer EDFilter skeleton
     output = cms.EDFilter(
-        "PATFinalStateAnalysisFilter",
+        "FinalStateAnalysisFilter",
         weights=cms.vstring(),
         # input final state collection.
         src=cms.InputTag( analyzerSrc ),

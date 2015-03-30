@@ -1,6 +1,6 @@
 /*
  * EDFilter which saves events which pass all selections of a
- * PATFinalStateAnalysis.
+ * FinalStateAnalysis.
  *
  * Author: Evan K. Friis UW Madison
  */
@@ -16,12 +16,12 @@
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
 #include "CommonTools/Utils/interface/TFileDirectory.h"
 
-#include "FinalStateAnalysis/NtupleTools/interface/PATFinalStateAnalysis.h"
+#include "FinalStateAnalysis/NtupleTools/interface/FinalStateAnalysis.h"
 
-class PATFinalStateAnalysisFilter : public edm::EDFilter {
+class FinalStateAnalysisFilter : public edm::EDFilter {
   public:
-    PATFinalStateAnalysisFilter(const edm::ParameterSet& pset);
-    virtual ~PATFinalStateAnalysisFilter(){}
+    FinalStateAnalysisFilter(const edm::ParameterSet& pset);
+    virtual ~FinalStateAnalysisFilter(){}
     void beginJob();
     void endJob();
     bool filter(edm::Event& evt, const edm::EventSetup& es);
@@ -30,42 +30,42 @@ class PATFinalStateAnalysisFilter : public edm::EDFilter {
     bool endLuminosityBlock(
         edm::LuminosityBlock& ls, const edm::EventSetup & es);
   private:
-    std::auto_ptr<PATFinalStateAnalysis> analysis_;
+    std::auto_ptr<FinalStateAnalysis> analysis_;
 };
 
-PATFinalStateAnalysisFilter::PATFinalStateAnalysisFilter(
+FinalStateAnalysisFilter::FinalStateAnalysisFilter(
     const edm::ParameterSet& pset) {
   edm::Service<TFileService> fs;
   TFileDirectory &fd =  fs->tFileDirectory();
-  analysis_.reset(new PATFinalStateAnalysis(pset, fd));
+  analysis_.reset(new FinalStateAnalysis(pset, fd));
 }
 
-bool PATFinalStateAnalysisFilter::filter(
+bool FinalStateAnalysisFilter::filter(
     edm::Event& evt, const edm::EventSetup& es) {
   const edm::EventBase& evtBase = evt;
   return analysis_->filter(evtBase);
 }
 
-bool PATFinalStateAnalysisFilter::beginLuminosityBlock(
+bool FinalStateAnalysisFilter::beginLuminosityBlock(
     edm::LuminosityBlock& ls, const edm::EventSetup& es) {
   const edm::LuminosityBlockBase& lsBase = ls;
   analysis_->beginLuminosityBlock(lsBase);
   return true;
 }
 
-bool PATFinalStateAnalysisFilter::endLuminosityBlock(
+bool FinalStateAnalysisFilter::endLuminosityBlock(
     edm::LuminosityBlock& ls, const edm::EventSetup& es) {
   const edm::LuminosityBlockBase& lsBase = ls;
   analysis_->endLuminosityBlock(lsBase);
   return true;
 }
 
-void PATFinalStateAnalysisFilter::beginJob() {
+void FinalStateAnalysisFilter::beginJob() {
   analysis_->beginJob();
 }
-void PATFinalStateAnalysisFilter::endJob() {
+void FinalStateAnalysisFilter::endJob() {
   analysis_->endJob();
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(PATFinalStateAnalysisFilter);
+DEFINE_FWK_MODULE(FinalStateAnalysisFilter);

@@ -100,7 +100,7 @@ process.mt = cms.EDAnalyzer(
 )
 
 process.testTrigger = cms.EDAnalyzer(
-    "PATFinalStateEventHistoAnalyzer",
+    "FinalStateEventHistoAnalyzer",
     src = cms.InputTag("patFinalStateEventProducer"),
     histograms = cms.VPSet(
         cms.PSet(

@@ -1,6 +1,6 @@
 /*
  * Embed the the mass resolution (calculated analytically)
- * into the PATFinalState object. 
+ * into the FinalState object. 
  * If the error is not available for daughter type the mass error is set to -1
  *
  * Author: L. Gray, FNAL
@@ -14,15 +14,15 @@
 #include "FWCore/Framework/interface/EDProducer.h"
 
 #include <string>
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateFwd.h"
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "FinalStateAnalysis/PatTools/interface/FinalStateMassResolution.h"
 
-class PATFinalStateMassResolutionEmbedder : public edm::EDProducer {
+class FinalStateMassResolutionEmbedder : public edm::EDProducer {
 public:
-  PATFinalStateMassResolutionEmbedder(const edm::ParameterSet& pset);
-  virtual ~PATFinalStateMassResolutionEmbedder(){ delete resoCalc_;}
+  FinalStateMassResolutionEmbedder(const edm::ParameterSet& pset);
+  virtual ~FinalStateMassResolutionEmbedder(){ delete resoCalc_;}
   void produce(edm::Event& evt, const edm::EventSetup& es);
 private:
   const bool debug_;
@@ -31,26 +31,26 @@ private:
   
 };
 
-PATFinalStateMassResolutionEmbedder::
-PATFinalStateMassResolutionEmbedder(const edm::ParameterSet& pset):
+FinalStateMassResolutionEmbedder::
+FinalStateMassResolutionEmbedder(const edm::ParameterSet& pset):
   debug_(pset.getParameter<bool>("debug")),
   src_(pset.getParameter<edm::InputTag>("src"))
 {  
   resoCalc_ = new FinalStateMassResolution();    
-  produces<PATFinalStateCollection>();
+  produces<FinalStateCollection>();
 }
 void 
-PATFinalStateMassResolutionEmbedder::
+FinalStateMassResolutionEmbedder::
 produce(edm::Event& evt, const edm::EventSetup& es) {
-  std::auto_ptr<PATFinalStateCollection> output(new PATFinalStateCollection);
+  std::auto_ptr<FinalStateCollection> output(new FinalStateCollection);
 
   resoCalc_->init(es);
 
-  edm::Handle<edm::View<PATFinalState> > finalStatesH;
+  edm::Handle<edm::View<FinalState> > finalStatesH;
   evt.getByLabel(src_, finalStatesH);
   
   for (size_t i = 0; i < finalStatesH->size(); ++i) {
-    PATFinalState* embedInto = finalStatesH->ptrAt(i)->clone();    
+    FinalState* embedInto = finalStatesH->ptrAt(i)->clone();    
     std::vector<double> components;
     double dM = 0;
     
@@ -81,4 +81,4 @@ produce(edm::Event& evt, const edm::EventSetup& es) {
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(PATFinalStateMassResolutionEmbedder);
+DEFINE_FWK_MODULE(FinalStateMassResolutionEmbedder);

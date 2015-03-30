@@ -13,15 +13,15 @@
 #include "FWCore/Framework/interface/EDProducer.h"
 
 #include <string>
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateFwd.h"
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "CommonTools/Utils/interface/StringCutObjectSelector.h"
 
-class PATFinalStateFloatEmbedder : public edm::EDProducer {
+class FinalStateFloatEmbedder : public edm::EDProducer {
   public:
-    PATFinalStateFloatEmbedder(const edm::ParameterSet& pset);
-    virtual ~PATFinalStateFloatEmbedder(){}
+    FinalStateFloatEmbedder(const edm::ParameterSet& pset);
+    virtual ~FinalStateFloatEmbedder(){}
     void produce(edm::Event& evt, const edm::EventSetup& es);
   private:
     edm::InputTag src_;
@@ -29,24 +29,24 @@ class PATFinalStateFloatEmbedder : public edm::EDProducer {
     std::string name_;
 };
 
-PATFinalStateFloatEmbedder::PATFinalStateFloatEmbedder(
+FinalStateFloatEmbedder::FinalStateFloatEmbedder(
     const edm::ParameterSet& pset) {
   src_ = pset.getParameter<edm::InputTag>("src");
   toEmbedSrc_ = pset.getParameter<edm::InputTag>("toEmbedSrc");
   name_ = pset.getParameter<std::string>("name");
-  produces<PATFinalStateCollection>();
+  produces<FinalStateCollection>();
 }
-void PATFinalStateFloatEmbedder::produce(edm::Event& evt, const edm::EventSetup& es) {
-  std::auto_ptr<PATFinalStateCollection> output(new PATFinalStateCollection);
+void FinalStateFloatEmbedder::produce(edm::Event& evt, const edm::EventSetup& es) {
+  std::auto_ptr<FinalStateCollection> output(new FinalStateCollection);
 
-  edm::Handle<edm::View<PATFinalState> > finalStatesH;
+  edm::Handle<edm::View<FinalState> > finalStatesH;
   evt.getByLabel(src_, finalStatesH);
 
   edm::Handle<double> toEmbedH;
   evt.getByLabel(toEmbedSrc_, toEmbedH);
 
   for (size_t i = 0; i < finalStatesH->size(); ++i) {
-    PATFinalState* embedInto = finalStatesH->ptrAt(i)->clone();
+    FinalState* embedInto = finalStatesH->ptrAt(i)->clone();
     embedInto->addUserFloat(name_, *toEmbedH);
     output->push_back(embedInto); // takes ownership
   }
@@ -54,4 +54,4 @@ void PATFinalStateFloatEmbedder::produce(edm::Event& evt, const edm::EventSetup&
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(PATFinalStateFloatEmbedder);
+DEFINE_FWK_MODULE(FinalStateFloatEmbedder);

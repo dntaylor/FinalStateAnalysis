@@ -29,7 +29,7 @@ eventView=0 - make a row in the ntuple correspond to an event
 instead of a final state in an event.
 passThru=0 - turn off any preselection/skim
 dump=0     - if one, dump process python to stdout
-rerunFSA=0 - regenerate PATFinalState dataformats
+rerunFSA=0 - regenerate FinalState dataformats
 verbose=0 - print out timing information
 noPhotons=0 - don't build things which depend on photons.
 rerunMVAMET=0 - rerun the MVAMET algorithm
@@ -542,7 +542,7 @@ if options.rerunFSA:
     # Drop the old stuff.
     process.source.inputCommands = cms.untracked.vstring(
         'keep *',
-        'drop PATFinalStatesOwned_finalState*_*_*',
+        'drop FinalStatesOwned_finalState*_*_*',
         'drop *_patFinalStateEvent*_*_*'
     )
 

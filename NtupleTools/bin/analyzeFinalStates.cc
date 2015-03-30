@@ -1,4 +1,4 @@
-#include "FinalStateAnalysis/NtupleTools/interface/PATFinalStateAnalysis.h"
+#include "FinalStateAnalysis/NtupleTools/interface/FinalStateAnalysis.h"
 #include "FWCore/PythonParameterSet/interface/MakeParameterSets.h"
 
 #include "DataFormats/FWLite/interface/ChainEvent.h"
@@ -47,14 +47,14 @@ int main(int argc, char* argv[]) {
   vstring toAnalyze = steering.getParameter<vstring>("analyzers");
 
   // Build our list of analyzers
-  boost::ptr_vector<PATFinalStateAnalysis> analyzers;
+  boost::ptr_vector<FinalStateAnalysis> analyzers;
   for (size_t i = 0; i < toAnalyze.size(); ++i) {
     std::cout << "Initializing final state analyzer: "
       << toAnalyze[i] << std::endl;
     TFileDirectory subdir = fileService.mkdir(toAnalyze[i].c_str());
     edm::ParameterSet anaCfg = cfg.getParameterSet(toAnalyze[i]);
     anaCfg.addParameter<std::string>("@module_label", toAnalyze[i]);
-    analyzers.push_back(new PATFinalStateAnalysis(anaCfg, subdir));
+    analyzers.push_back(new FinalStateAnalysis(anaCfg, subdir));
   }
 
   /// Last run processed

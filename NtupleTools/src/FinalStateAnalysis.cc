@@ -1,12 +1,12 @@
-#include "FinalStateAnalysis/NtupleTools/interface/PATFinalStateAnalysis.h"
+#include "FinalStateAnalysis/NtupleTools/interface/FinalStateAnalysis.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateFwd.h"
-#include "FinalStateAnalysis/NtupleTools/interface/PATFinalStateSelection.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateFwd.h"
+#include "FinalStateAnalysis/NtupleTools/interface/FinalStateSelection.h"
 #include "FinalStateAnalysis/Utilities/interface/CutFlow.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateEvent.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateLS.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateEvent.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateLS.h"
 
 #include "FWCore/Common/interface/LuminosityBlockBase.h"
 #include "CommonTools/Utils/interface/TFileDirectory.h"
@@ -16,7 +16,7 @@
 
 #include <sstream>
 
-PATFinalStateAnalysis::PATFinalStateAnalysis(
+FinalStateAnalysis::FinalStateAnalysis(
     const edm::ParameterSet& pset, TFileDirectory& fs):
   BasicAnalyzer(pset, fs),fs_(fs) {
   src_ = pset.getParameter<edm::InputTag>("src");
@@ -33,7 +33,7 @@ PATFinalStateAnalysis::PATFinalStateAnalysis(
   analysisCfg_ = pset.getParameterSet("analysis");
   filter_ = pset.exists("filter") ? pset.getParameter<bool>("filter") : false;
   // Build the analyzer
-  analysis_.reset(new PATFinalStateSelection(analysisCfg_, fs_));
+  analysis_.reset(new FinalStateSelection(analysisCfg_, fs_));
   // Check if we want to make a sub analyzer for each run (use w/ caution!)
   splitRuns_ = pset.exists("splitRuns") ?
     pset.getParameter<bool>("splitRuns") : false;
@@ -61,9 +61,9 @@ PATFinalStateAnalysis::PATFinalStateAnalysis(
   metaTree_->Branch("nevents", &treeEventsProcessedBranch_, "nevents/I");
 }
 
-PATFinalStateAnalysis::~PATFinalStateAnalysis() { }
+FinalStateAnalysis::~FinalStateAnalysis() { }
 
-void PATFinalStateAnalysis::endLuminosityBlock(
+void FinalStateAnalysis::endLuminosityBlock(
     const edm::LuminosityBlockBase& ls) {
   //std::cout << "Analyzing lumisec: " << ls.id() << std::endl;
 
@@ -71,7 +71,7 @@ void PATFinalStateAnalysis::endLuminosityBlock(
   ls.getByLabel(skimCounter_, skimmedEvents);
   skimEventCounter_->Fill(0.0, skimmedEvents->value);
 
-  edm::Handle<PATFinalStateLS> lumiSummary;
+  edm::Handle<FinalStateLS> lumiSummary;
   ls.getByLabel(lumiProducer_, lumiSummary);
   integratedLumi_->Fill(0.0, lumiSummary->intLumi());
   treeIntLumi_ = lumiSummary->intLumi();
@@ -83,12 +83,12 @@ void PATFinalStateAnalysis::endLuminosityBlock(
   metaTree_->Fill();
 }
 
-bool PATFinalStateAnalysis::filter(const edm::EventBase& evt) {
+bool FinalStateAnalysis::filter(const edm::EventBase& evt) {
   // Get the event weight
   double eventWeight = 1.0;
 
   if (evtWeights_.size()) {
-    edm::Handle<PATFinalStateEventCollection> event;
+    edm::Handle<FinalStateEventCollection> event;
     evt.getByLabel(evtSrc_, event);
     for (size_t i = 0; i < evtWeights_.size(); ++i) {
       eventWeight *= evtWeights_[i]( (*event)[0] );
@@ -100,10 +100,10 @@ bool PATFinalStateAnalysis::filter(const edm::EventBase& evt) {
   eventWeights_->Fill(eventWeight);
 
   // Get the final states to analyze
-  edm::Handle<PATFinalStateCollection> finalStates;
+  edm::Handle<FinalStateCollection> finalStates;
   evt.getByLabel(src_, finalStates);
 
-  std::vector<const PATFinalState*> finalStatePtrs;
+  std::vector<const FinalState*> finalStatePtrs;
   finalStatePtrs.reserve(finalStates->size());
 
   //Normal running
@@ -123,14 +123,14 @@ bool PATFinalStateAnalysis::filter(const edm::EventBase& evt) {
     if (!runAnalysis_.count(run)) {
       std::stringstream ss; ss << run;
       TFileDirectory subdir = runDir_->mkdir(ss.str());
-      boost::shared_ptr<PATFinalStateSelection> runSelection(
-          new PATFinalStateSelection(analysisCfg_, subdir));
+      boost::shared_ptr<FinalStateSelection> runSelection(
+          new FinalStateSelection(analysisCfg_, subdir));
       runAnalysis_.insert(std::make_pair(run, runSelection));
     }
     // Analyze this event using the current run folder
     RunMap::iterator theSelectionIter = runAnalysis_.find(run);
     assert(theSelectionIter != runAnalysis_.end());
-    PATFinalStateSelection* selection = theSelectionIter->second.get();
+    FinalStateSelection* selection = theSelectionIter->second.get();
     assert(selection);
     (*selection)(finalStatePtrs, eventWeight);
   }
@@ -146,11 +146,11 @@ bool PATFinalStateAnalysis::filter(const edm::EventBase& evt) {
   return result;
 }
 
-void PATFinalStateAnalysis::analyze(const edm::EventBase& evt) {
+void FinalStateAnalysis::analyze(const edm::EventBase& evt) {
   filter(evt);
 }
 
-void PATFinalStateAnalysis::endJob() {
+void FinalStateAnalysis::endJob() {
   std::cout << "Cut flow for analyzer: " << name_ << std::endl;
   analysis_->cutFlow()->print(std::cout);
   std::cout << std::endl;

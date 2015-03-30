@@ -16,17 +16,17 @@
 #include "FWCore/Framework/interface/EDProducer.h"
 
 #include <string>
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateFwd.h"
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "CommonTools/Utils/interface/StringCutObjectSelector.h"
 
 #include "DataFormats/Math/interface/deltaR.h"
 
-class PATFinalStateOverlapEmbedder : public edm::EDProducer {
+class FinalStateOverlapEmbedder : public edm::EDProducer {
   public:
-    PATFinalStateOverlapEmbedder(const edm::ParameterSet& pset);
-    virtual ~PATFinalStateOverlapEmbedder(){}
+    FinalStateOverlapEmbedder(const edm::ParameterSet& pset);
+    virtual ~FinalStateOverlapEmbedder(){}
     void produce(edm::Event& evt, const edm::EventSetup& es);
   private:
     edm::InputTag src_;
@@ -38,7 +38,7 @@ class PATFinalStateOverlapEmbedder : public edm::EDProducer {
 
 };
 
-PATFinalStateOverlapEmbedder::PATFinalStateOverlapEmbedder(
+FinalStateOverlapEmbedder::FinalStateOverlapEmbedder(
     const edm::ParameterSet& pset):cut_(
       pset.getParameter<std::string>("cut"), true){
   src_ = pset.getParameter<edm::InputTag>("src");
@@ -46,19 +46,19 @@ PATFinalStateOverlapEmbedder::PATFinalStateOverlapEmbedder(
   name_ = pset.getParameter<std::string>("name");
   minDeltaR_ = pset.getParameter<double>("minDeltaR");
   maxDeltaR_ = pset.getParameter<double>("maxDeltaR");
-  produces<PATFinalStateCollection>();
+  produces<FinalStateCollection>();
 }
-void PATFinalStateOverlapEmbedder::produce(edm::Event& evt, const edm::EventSetup& es) {
-  std::auto_ptr<PATFinalStateCollection> output(new PATFinalStateCollection);
+void FinalStateOverlapEmbedder::produce(edm::Event& evt, const edm::EventSetup& es) {
+  std::auto_ptr<FinalStateCollection> output(new FinalStateCollection);
 
-  edm::Handle<edm::View<PATFinalState> > finalStatesH;
+  edm::Handle<edm::View<FinalState> > finalStatesH;
   evt.getByLabel(src_, finalStatesH);
 
   edm::Handle<edm::View<reco::Candidate> > toEmbedH;
   evt.getByLabel(toEmbedSrc_, toEmbedH);
 
   for (size_t i = 0; i < finalStatesH->size(); ++i) {
-    PATFinalState* embedInto = finalStatesH->ptrAt(i)->clone();
+    FinalState* embedInto = finalStatesH->ptrAt(i)->clone();
     reco::CandidatePtrVector overlaps;
     for (size_t j = 0; j < toEmbedH->size(); ++j) {
       const reco::CandidatePtr toTest = toEmbedH->ptrAt(j);
@@ -83,4 +83,4 @@ void PATFinalStateOverlapEmbedder::produce(edm::Event& evt, const edm::EventSetu
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(PATFinalStateOverlapEmbedder);
+DEFINE_FWK_MODULE(FinalStateOverlapEmbedder);

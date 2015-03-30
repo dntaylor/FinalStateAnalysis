@@ -14,38 +14,38 @@
 #include "FWCore/Framework/interface/EDProducer.h"
 
 #include <string>
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalState.h"
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalState.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateFwd.h"
 #include "DataFormats/Candidate/interface/Candidate.h"
 #include "CommonTools/Utils/interface/StringCutObjectSelector.h"
 
-class PATFinalStateCopier : public edm::EDProducer {
+class FinalStateCopier : public edm::EDProducer {
   public:
-    PATFinalStateCopier(const edm::ParameterSet& pset);
-    virtual ~PATFinalStateCopier(){}
+    FinalStateCopier(const edm::ParameterSet& pset);
+    virtual ~FinalStateCopier(){}
     void produce(edm::Event& evt, const edm::EventSetup& es);
   private:
     edm::InputTag src_;
     std::string name_;
 };
 
-PATFinalStateCopier::PATFinalStateCopier(
+FinalStateCopier::FinalStateCopier(
     const edm::ParameterSet& pset) {
   src_ = pset.getParameter<edm::InputTag>("src");
-  produces<PATFinalStateCollection>();
+  produces<FinalStateCollection>();
 }
-void PATFinalStateCopier::produce(edm::Event& evt, const edm::EventSetup& es) {
-  std::auto_ptr<PATFinalStateCollection> output(new PATFinalStateCollection);
+void FinalStateCopier::produce(edm::Event& evt, const edm::EventSetup& es) {
+  std::auto_ptr<FinalStateCollection> output(new FinalStateCollection);
 
-  edm::Handle<edm::View<PATFinalState> > finalStatesH;
+  edm::Handle<edm::View<FinalState> > finalStatesH;
   evt.getByLabel(src_, finalStatesH);
 
   for (size_t i = 0; i < finalStatesH->size(); ++i) {
-    PATFinalState* embedInto = finalStatesH->ptrAt(i)->clone();
+    FinalState* embedInto = finalStatesH->ptrAt(i)->clone();
     output->push_back(embedInto); // takes ownership
   }
   evt.put(output);
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(PATFinalStateCopier);
+DEFINE_FWK_MODULE(FinalStateCopier);

@@ -1,5 +1,5 @@
 /*
- * Wrapper about PATFinalStateSelection which handles the getting objects from
+ * Wrapper about FinalStateSelection which handles the getting objects from
  * the event.
  */
 
@@ -16,22 +16,22 @@
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "DataFormats/Provenance/interface/RunID.h"
 
-#include "FinalStateAnalysis/DataFormats/interface/PATFinalStateEventFwd.h"
+#include "FinalStateAnalysis/DataFormats/interface/FinalStateEventFwd.h"
 #include "CommonTools/Utils/interface/StringObjectFunction.h"
 #include "PhysicsTools/UtilAlgos/interface/BasicAnalyzer.h"
 
 class TH1;
 class TTree;
-class PATFinalStateSelection;
+class FinalStateSelection;
 class TFileDirectory;
 namespace edm {
   class LuminosityBlockBase;
 }
 
-class PATFinalStateAnalysis : public edm::BasicAnalyzer {
+class FinalStateAnalysis : public edm::BasicAnalyzer {
   public:
-    PATFinalStateAnalysis(const edm::ParameterSet& pset, TFileDirectory& fs);
-    virtual ~PATFinalStateAnalysis();
+    FinalStateAnalysis(const edm::ParameterSet& pset, TFileDirectory& fs);
+    virtual ~FinalStateAnalysis();
     void beginJob() {}
     void endJob();
     // Alias for filter with no return value
@@ -46,17 +46,17 @@ class PATFinalStateAnalysis : public edm::BasicAnalyzer {
     std::string name_;
     TFileDirectory& fs_;
     edm::ParameterSet analysisCfg_;
-    boost::shared_ptr<PATFinalStateSelection> analysis_;
+    boost::shared_ptr<FinalStateSelection> analysis_;
 
     // Tools for applying event weights
-    typedef StringObjectFunction<PATFinalStateEvent> EventFunction;
+    typedef StringObjectFunction<FinalStateEvent> EventFunction;
     edm::InputTag evtSrc_;
     std::vector<EventFunction> evtWeights_;
 
     // Tool for examining individual runs
     bool splitRuns_;
     std::auto_ptr<TFileDirectory> runDir_;
-    typedef std::map<edm::RunNumber_t, boost::shared_ptr<PATFinalStateSelection> > RunMap;
+    typedef std::map<edm::RunNumber_t, boost::shared_ptr<FinalStateSelection> > RunMap;
     RunMap runAnalysis_;
 
     // For counting events
