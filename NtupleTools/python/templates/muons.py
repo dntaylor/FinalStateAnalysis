@@ -19,8 +19,6 @@ id = PSet(
     objectPFIDTight = 'isTightMuon({object_idx})',
     objectPFIDLoose = '{object}.isLooseMuon()',
     # For charged, we use ALL charged particles
-    #objectEffectiveArea2012 = '{object}.userFloat("ea_comb_iso04_kt6PFJCNth05")',
-    #objectEffectiveArea2011 = '{object}.userFloat("ea_comb_iso04_kt6PFJCth05")',
     objectRho = cms.string('{object}.userFloat("rhoCSA14")'),
     objectPFChargedIso = cms.string('{object}.userIsolation("PfChargedHadronIso")'),
     objectPFNeutralIso = cms.string('{object}.userIsolation("PfNeutralHadronIso")'),
