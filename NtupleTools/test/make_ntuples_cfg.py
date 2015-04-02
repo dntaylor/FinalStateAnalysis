@@ -32,7 +32,6 @@ dump=0     - if one, dump process python to stdout
 rerunFSA=0 - regenerate PATFinalState dataformats
 verbose=0 - print out timing information
 noPhotons=0 - don't build things which depend on photons.
-rerunMVAMET=0 - rerun the MVAMET algorithm
 svFit=1 - run the SVfit on appropriate pairs
 rerunQGJetID=0 - rerun the quark-gluon JetID
 runNewElectronMVAID=0 - run the new electron MVAID
@@ -77,7 +76,6 @@ options = TauVarParsing.TauVarParsing(
     eleCor="",
     rerunQGJetID=0,  # If one reruns the quark-gluon JetID
     runNewElectronMVAID=0,  # If one runs the new electron MVAID
-    rerunMVAMET=0,  # If one, (re)build the MVA MET
     rerunJets=0,
     dblhMode=False, # For double-charged Higgs analysis
     runTauSpinner=0,
@@ -188,23 +186,6 @@ if options.rerunFSA:
     else:
         mvamet_collection = 'systematicsMETMVA'
 
-    # Make a version with the MVA MET reconstruction method
-    # Works only if we rerun the FSA!
-    if options.rerunMVAMET:
-        process.load("FinalStateAnalysis.PatTools.met.mvaMetOnPatTuple_cff")
-        if options.useMiniAOD:
-            process.isotaus.src = "slimmedTaus"
-            mvamet_collection = "slimmedMETs"
-        else:
-            process.isotaus.src = "cleanPatTaus"
-            mvamet_collection = "patMEtMVA"
-        if not options.isMC:
-            process.patMEtMVA.addGenMET = False
-        process.mvaMetPath = cms.Path(process.pfMEtMVAsequence)
-        process.schedule.append(process.mvaMetPath)
-        print "rerunning MVA MET sequence, output collection will be {n}"\
-            .format(n=mvamet_collection)
-
     # Drop the input ones, just to make sure we aren't screwing anything up
     process.buildFSASeq = cms.Sequence()
     from FinalStateAnalysis.PatTools.patFinalStateProducers \
@@ -268,17 +249,6 @@ if options.rerunFSA:
 
     if options.rerunJets:
         process.schedule.append(rerun_jets(process))
-
-    if options.runNewElectronMVAID:
-        process.load("FinalStateAnalysis.PatTools."
-                     "electrons.patElectronSummer13MVAID_cfi")
-        helpers.massSearchReplaceAnyInputTag(
-            process.runAndEmbedSummer13Id,
-            'fixme',
-            fs_daughter_inputs['electrons'])
-        fs_daughter_inputs['electrons'] = 'patElectrons2013MVAID'
-        process.runNewElectronMVAID = cms.Path(process.runAndEmbedSummer13Id)
-        process.schedule.append(process.runNewElectronMVAID)
 
     # embed some things we need that arent in miniAOD yet (like some ids)
     output_commands = []
