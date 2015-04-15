@@ -54,7 +54,7 @@ PATFinalStateEvent::PATFinalStateEvent(
   met_(met) { }
 
 PATFinalStateEvent::PATFinalStateEvent(
-    //bool miniAOD,
+    bool miniAOD,
     double rho,
     const edm::Ptr<reco::Vertex>& pv,
     const edm::PtrVector<reco::Vertex>& recoVertices,
