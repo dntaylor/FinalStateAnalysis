@@ -42,8 +42,6 @@ use25ns=1 - run on 25 ns miniAOD (default, 0 = 50ns)
 runDQM=0 - run over single object final states to test all object properties (wont check diobject properties)
 hzz=0 - Include FSR contribution a la HZZ4l group, include all ZZ candidates (including alternative lepton pairings).
 nExtraJets=0 - Include basic info about this many jets (ordered by pt). Ignored if final state involves jets.
-
-
 '''
 
 import FWCore.ParameterSet.Config as cms
