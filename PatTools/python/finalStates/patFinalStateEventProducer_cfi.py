@@ -37,3 +37,5 @@ patFinalStateEventProducer = cms.EDProducer(
     photonCoreSrc = cms.InputTag("reducedEgamma","reducedGedPhotonCores"),
     gsfCoreSrc = cms.InputTag("reducedEgamma","reducedGedGsfElectronCores")
 )
+
+patFinalStateGenEventProducer = patFinalStateEventProducer.clone()

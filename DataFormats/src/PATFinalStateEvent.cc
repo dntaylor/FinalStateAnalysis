@@ -80,6 +80,7 @@ PATFinalStateEvent::PATFinalStateEvent(
     const edm::RefProd<pat::PhotonCollection>& phoRefProd,
     const reco::PFCandidateRefProd& pfRefProd,
     const edm::RefProd<pat::PackedCandidateCollection>& packedPFRefProd,
+    const edm::RefProd<pat::PackedGenParticleCollection>& packedGenRefProd,
     const reco::TrackRefProd& tracks,
     const reco::GsfTrackRefProd& gsfTracks,
     const std::map<std::string, edm::Ptr<pat::MET> >& mets
@@ -111,10 +112,70 @@ PATFinalStateEvent::PATFinalStateEvent(
   phoRefProd_(phoRefProd),
   pfRefProd_(pfRefProd),
   packedPFRefProd_(packedPFRefProd),
+  packedGenRefProd_(packedGenRefProd),
   tracks_(tracks),
   gsfTracks_(gsfTracks),
   mets_(mets)
 { }
+
+PATFinalStateEvent::PATFinalStateEvent(
+    bool miniAOD,
+    double rho,
+    const edm::Ptr<reco::Vertex>& pv,
+    const edm::PtrVector<reco::Vertex>& recoVertices,
+    const edm::Ptr<pat::MET>& met,
+    const TMatrixD& metCovariance,
+    const pat::TriggerEvent triggerEvent,
+    const edm::RefProd<std::vector<pat::TriggerObjectStandAlone> >& triggerObjects,
+    const edm::TriggerNames& names,
+    const pat::PackedTriggerPrescales& triggerPrescale,
+    const edm::TriggerResults& triggerResults,
+    const std::vector<PileupSummaryInfo>& puInfo,
+    const lhef::HEPEUP& hepeup, // Les Houches info
+    const reco::GenParticleRefProd& genParticles,
+    const edm::EventID& evtId,
+    const GenEventInfoProduct& genEventInfo,
+    const GenFilterInfo& generatorFilter,
+    bool isRealData,
+    const std::string& puScenario,
+    const edm::RefProd<reco::GenParticleCollection>& electronGenRefProd,
+    const edm::RefProd<reco::GenParticleCollection>& muonGenRefProd,
+    const edm::RefProd<reco::GenParticleCollection>& tauGenRefProd,
+    const edm::RefProd<reco::GenJetCollection>& jetGenRefProd,
+    const edm::RefProd<reco::GenParticleCollection>& phoGenRefProd,
+    const edm::RefProd<pat::PackedGenParticleCollection>& packedGenRefProd,
+    const std::map<std::string, edm::Ptr<pat::MET> >& mets
+    ):
+  miniAOD_(miniAOD),
+  rho_(rho),
+  triggerEvent_(triggerEvent),
+  triggerObjects_(triggerObjects),
+  names_(names),
+  triggerPrescale_(triggerPrescale),
+  triggerResults_(triggerResults),
+  pv_(pv),
+  recoVertices_(recoVertices),
+  met_(met),
+  metCovariance_(metCovariance),
+  puInfo_(puInfo),
+  lhe_(hepeup),
+  genParticles_(genParticles),
+  evtID_(evtId),
+  genEventInfoProduct_(genEventInfo),
+  generatorFilter_(generatorFilter),
+  isRealData_(isRealData),
+  puScenario_(puScenario),
+  fsaDataFormatVersion_(FSA_DATA_FORMAT_VERSION),
+  electronGenRefProd_(electronGenRefProd),
+  muonGenRefProd_(muonGenRefProd),
+  tauGenRefProd_(tauGenRefProd),
+  jetGenRefProd_(jetGenRefProd),
+  phoGenRefProd_(phoGenRefProd),
+  packedGenRefProd_(packedGenRefProd),
+  mets_(mets)
+{ }
+
+
 
 const edm::Ptr<reco::Vertex>& PATFinalStateEvent::pv() const { return pv_; }
 
@@ -346,6 +407,42 @@ const pat::PhotonCollection& PATFinalStateEvent::photons() const {
   return *phoRefProd_;
 }
 
+const reco::GenParticleCollection& PATFinalStateEvent::genElectrons() const {
+  if (!electronGenRefProd_)
+    throw cms::Exception("PATFSAEventNullRefs")
+      << "The electron gen particle RefProd is null!" << std::endl;
+  return *electronGenRefProd_;
+}
+
+const reco::GenParticleCollection& PATFinalStateEvent::genMuons() const {
+  if (!muonGenRefProd_)
+    throw cms::Exception("PATFSAEventNullRefs")
+      << "The muon gen particle RefProd is null!" << std::endl;
+  return *muonGenRefProd_;
+}
+
+const reco::GenParticleCollection& PATFinalStateEvent::genTaus() const {
+  if (!tauGenRefProd_)
+    throw cms::Exception("PATFSAEventNullRefs")
+      << "The tau gen particle RefProd is null!" << std::endl;
+  return *tauGenRefProd_;
+}
+
+const reco::GenJetCollection& PATFinalStateEvent::genJets() const {
+  if (!jetGenRefProd_)
+    throw cms::Exception("PATFSAEventNullRefs")
+      << "The jet gen particle RefProd is null!" << std::endl;
+  return *jetGenRefProd_;
+}
+
+const reco::GenParticleCollection& PATFinalStateEvent::genPhotons() const {
+  if (!phoGenRefProd_)
+    throw cms::Exception("PATFSAEventNullRefs")
+      << "The photon gen particle RefProd is null!" << std::endl;
+  return *phoGenRefProd_;
+}
+
+
 const reco::PFCandidateCollection& PATFinalStateEvent::pflow() const {
   if (!pfRefProd_)
     throw cms::Exception("PATFSAEventNullRefs")
@@ -358,6 +455,13 @@ const pat::PackedCandidateCollection& PATFinalStateEvent::packedPflow() const {
     throw cms::Exception("PATFSAEventNullRefs")
       << "The Packed PFLOW RefProd is null!" << std::endl;
   return *packedPFRefProd_;
+}
+
+const pat::PackedGenParticleCollection& PATFinalStateEvent::packedGenParticle() const {
+  if (!packedGenRefProd_)
+    throw cms::Exception("PATFSAEventNullRefs")
+      << "The Packed Gen Particle RefProd is null!" << std::endl;
+  return *packedGenRefProd_;
 }
 
 const bool PATFinalStateEvent::findDecay(const int pdgIdMother, const int pdgIdDaughter) const{

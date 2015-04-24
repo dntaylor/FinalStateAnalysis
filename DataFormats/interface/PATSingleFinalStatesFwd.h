@@ -15,6 +15,10 @@ namespace pat {
   class Jet;
 }
 
+namespace reco {
+  class DressedLepton;
+}
+
 typedef PATSingleFinalStateT<pat::Electron> PATElecFinalState;
 typedef PATSingleFinalStateT<pat::Muon> PATMuFinalState;
 typedef PATSingleFinalStateT<pat::Tau> PATTauFinalState;
@@ -26,5 +30,9 @@ FWD_TYPEDEFS(PATMuFinalState)
 FWD_TYPEDEFS(PATTauFinalState)
 FWD_TYPEDEFS(PATPhoFinalState)
 FWD_TYPEDEFS(PATJetFinalState)
+
+// Gen typedef
+typedef PATSingleFinalStateT<reco::DressedLepton> PATSingleGenFinalState;
+FWD_TYPEDEFS(PATSingleGenFinalState)
 
 #endif

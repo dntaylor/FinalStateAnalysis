@@ -7,6 +7,8 @@ typedef PATSingleFinalStateBuilderT<PATTauFinalState> PATTauFinalStateProducer;
 typedef PATSingleFinalStateBuilderT<PATPhoFinalState> PATPhoFinalStateProducer;
 typedef PATSingleFinalStateBuilderT<PATJetFinalState> PATJetFinalStateProducer;
 
+typedef PATSingleFinalStateBuilderT<PATSingleGenFinalState> PATSingleGenFinalStateProducer;
+
 #include "FWCore/Framework/interface/MakerMacros.h"
 DEFINE_FWK_MODULE(PATElecFinalStateProducer);
 DEFINE_FWK_MODULE(PATMuFinalStateProducer);
@@ -14,3 +16,4 @@ DEFINE_FWK_MODULE(PATTauFinalStateProducer);
 DEFINE_FWK_MODULE(PATPhoFinalStateProducer);
 DEFINE_FWK_MODULE(PATJetFinalStateProducer);
 
+DEFINE_FWK_MODULE(PATSingleGenFinalStateProducer);

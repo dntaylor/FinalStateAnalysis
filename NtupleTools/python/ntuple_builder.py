@@ -99,6 +99,11 @@ _photon_template = PSet(
     templates.topology.mtToMET,
 )
 
+_gen_template = PSet(
+    templates.gen.kinematics,
+    templates.gen.geninfo,
+)
+
 
 _leg_templates = {
     't': _tau_template,
@@ -200,6 +205,7 @@ def make_ntuple(*legs, **kwargs):
 
     useMiniAOD = kwargs.get('useMiniAOD',False)
     hzz = kwargs.get('hzz',False)
+    doGen = kwargs.get('doGen',False)
 
     ntuple_config = _common_template.clone()
     if kwargs.get('runTauSpinner', False):
@@ -234,6 +240,7 @@ def make_ntuple(*legs, **kwargs):
 
         # Get a PSet describing the branches for this leg
         leg_branches = _leg_templates[leg].replace(object=label)
+        if doGen: leg_branches = _gen_template.replace(object=label)
 
 
         # Add to the total config
@@ -346,6 +353,7 @@ def make_ntuple(*legs, **kwargs):
             ),
         )
     )
+    if doGen: output.evtSrc = cms.InputTag("patFinalStateGenEventProducer")
 
     # Apply the basic selection to each leg
     for i, leg in enumerate(legs):

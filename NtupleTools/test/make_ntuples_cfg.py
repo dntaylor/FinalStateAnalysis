@@ -90,6 +90,7 @@ options = TauVarParsing.TauVarParsing(
     use25ns=1,
     runDQM=0,
     hzz=0,
+    doGen=0,
 )
 
 # options.register(
@@ -703,6 +704,16 @@ for final_state in expanded_final_states(final_states):
                             hzz=options.hzz, nExtraJets=extraJets)
     add_ntuple(final_state, analyzer, process,
                process.schedule, options.eventView)
+    if options.doGen:
+        analyzer = make_ntuple(*final_state,
+                                svFit=options.svFit, dblhMode=options.dblhMode,
+                                runTauSpinner=options.runTauSpinner,
+                                skimCuts=options.skimCuts,useMiniAOD=options.useMiniAOD,
+                                hzz=options.hzz, nExtraJets=extraJets,
+                                suffix='Gen',doGen=options.doGen)
+        add_ntuple(final_state+'_gen', analyzer, process,
+                   process.schedule, options.eventView)
+
 
 
 process.load("FWCore.MessageLogger.MessageLogger_cfi")

@@ -44,7 +44,7 @@ def _combinatorics(items, n):
 def produce_final_states(process, collections, output_commands,
                          sequence, puTag, buildFSAEvent=True,
                          noTracks=False, noPhotons=False, hzz=False,
-                         rochCor="", eleCor="", useMiniAOD=False, use25ns=False):
+                         rochCor="", eleCor="", useMiniAOD=False, use25ns=False, doGen=False):
 
     muonsrc = collections['muons']
     esrc = collections['electrons']
@@ -272,7 +272,9 @@ def produce_final_states(process, collections, output_commands,
             # X-cleaning
             cut=cms.string(' & '.join(cuts))
         )
+        if doGen: producer.evtSrc=cms.InputTag("patFinalStateGenEventProducer")
         producer_name = "finalState%s" % object[0]
+        if doGen: producer_name += 'Gen'
         setattr(process, producer_name + "Raw", producer)
         process.buildSingleObjects += producer
         # Embed the other collections
@@ -315,7 +317,9 @@ def produce_final_states(process, collections, output_commands,
             # X-cleaning
             cut=cms.string(' & '.join(cuts))
         )
+        if doGen: producer.evtSrc=cms.InputTag("patFinalStateGenEventProducer")
         producer_name = "finalState%s%s" % (diobject[0][0], diobject[1][0])
+        if doGen: producer_name += 'Gen'
         setattr(process, producer_name + "Raw", producer)
         process.buildDiObjects += producer
         # Embed the other collections
@@ -360,8 +364,10 @@ def produce_final_states(process, collections, output_commands,
             # X-cleaning
             cut=cms.string(' & '.join(cuts))
         )
+        if doGen: producer.evtSrc=cms.InputTag("patFinalStateGenEventProducer")
         producer_name = "finalState%s%s%s" % (
             triobject[0][0], triobject[1][0], triobject[2][0])
+        if doGen: producer_name += 'Gen'
         #setattr(process, producer_name, producer)
         #process.buildTriLeptons += producer
         setattr(process, producer_name + "Raw", producer)
@@ -412,10 +418,12 @@ def produce_final_states(process, collections, output_commands,
             # X-cleaning
             cut=cms.string(' & '.join(cuts))
         )
+        if doGen: producer.evtSrc=cms.InputTag("patFinalStateGenEventProducer")
         producer_name = "finalState%s%s%s%s" % (
             quadobject[0][0], quadobject[1][0], quadobject[2][0],
             quadobject[3][0]
         )
+        if doGen: producer_name += 'Gen'
         #setattr(process, producer_name, producer)
         #process.buildTriLeptons += producer
         setattr(process, producer_name + "Raw", producer)

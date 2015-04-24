@@ -24,6 +24,8 @@ typedef PATQuadFinalStateBuilderT<PATMuTauTauTauFinalState> PATMuTauTauTauFinalS
 typedef PATQuadFinalStateBuilderT<PATTauTauTauTauFinalState> PATTauTauTauTauFinalStateProducer;
 typedef PATQuadFinalStateBuilderT<PATMuMuPhoPhoFinalState> PATMuMuPhoPhoFinalStateProducer;
 
+typedef PATQuadFinalStateBuilderT<PATQuadGenFinalState> PATQuadGenFinalStateProducer;
+
 #include "FWCore/Framework/interface/MakerMacros.h"
 
 DEFINE_FWK_MODULE(PATElecElecElecElecFinalStateProducer);
@@ -48,3 +50,5 @@ DEFINE_FWK_MODULE(PATMuMuTauTauFinalStateProducer);
 DEFINE_FWK_MODULE(PATMuTauTauTauFinalStateProducer);
 DEFINE_FWK_MODULE(PATTauTauTauTauFinalStateProducer);
 DEFINE_FWK_MODULE(PATMuMuPhoPhoFinalStateProducer);
+
+DEFINE_FWK_MODULE(PATQuadGenFinalStateProducer);

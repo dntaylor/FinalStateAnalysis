@@ -30,6 +30,7 @@
 #include "DataFormats/TrackReco/interface/TrackFwd.h"
 #include "DataFormats/GsfTrackReco/interface/GsfTrackFwd.h"
 #include "DataFormats/HepMCCandidate/interface/GenParticleFwd.h"
+#include "DataFormats/PatCandidates/interface/PackedGenParticle.h"
 #include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
 #include "SimDataFormats/GeneratorProducts/interface/LHEEventProduct.h"
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
@@ -81,8 +82,39 @@ class PATFinalStateEvent {
 	const edm::RefProd<pat::PhotonCollection>& phoRefProd,
         const reco::PFCandidateRefProd& pfRefProd,
         const edm::RefProd<pat::PackedCandidateCollection>& packedPFRefProd,
+        const edm::RefProd<pat::PackedGenParticleCollection>& packedGenRefProd,
         const reco::TrackRefProd& tracks,
         const reco::GsfTrackRefProd& gsfTracks,
+	const std::map<std::string, edm::Ptr<pat::MET> >& mets
+    );
+
+    // This one is used for producing gen events
+    PATFinalStateEvent(
+        bool miniAOD,
+        double rho,
+        const edm::Ptr<reco::Vertex>& pv,
+        const edm::PtrVector<reco::Vertex>& recoVertices,
+        const edm::Ptr<pat::MET>& met,
+        const TMatrixD& metCovariance,
+        const pat::TriggerEvent triggerEvent,
+        const edm::RefProd<std::vector<pat::TriggerObjectStandAlone> >& triggerObjects,
+        const edm::TriggerNames& names,
+        const pat::PackedTriggerPrescales& triggerPrescale,
+        const edm::TriggerResults& triggerResults,
+        const std::vector<PileupSummaryInfo>& puInfo,
+        const lhef::HEPEUP& hepeup, // Les Houches info
+        const reco::GenParticleRefProd& genParticles,
+        const edm::EventID& evtId,
+        const GenEventInfoProduct& genEventInfoProd,
+        const GenFilterInfo& genFilterInfo,
+        bool isRealData,
+        const std::string& puScenario,
+        const edm::RefProd<reco::GenParticleCollection>& electronGenRefProd,
+        const edm::RefProd<reco::GenParticleCollection>& muonGenRefProd,
+        const edm::RefProd<reco::GenParticleCollection>& tauGenRefProd,
+        const edm::RefProd<reco::GenJetCollection>& jetGenRefProd,
+	const edm::RefProd<reco::GenParticleCollection>& phoGenRefProd,
+        const edm::RefProd<pat::PackedGenParticleCollection>& packedGenRefProd,
 	const std::map<std::string, edm::Ptr<pat::MET> >& mets
     );
 
@@ -182,12 +214,19 @@ class PATFinalStateEvent {
     const pat::TauCollection& taus() const;
     const pat::PhotonCollection& photons() const;
 
+    const reco::GenParticleCollection& genElectrons() const;
+    const reco::GenParticleCollection& genMuons() const;
+    const reco::GenJetCollection& genJets() const;
+    const reco::GenParticleCollection& genTaus() const;
+    const reco::GenParticleCollection& genPhotons() const;
+
     /// Access to particle flow collections
     const reco::PFCandidateCollection& pflow() const;
     const pat::PackedCandidateCollection& packedPflow() const;
 
     //Access to GenParticleRefProd
     const reco::GenParticleRefProd genParticleRefProd() const {return genParticles_;} 
+    const pat::PackedGenParticleCollection& packedGenParticle() const;
 
     /// Get the version of the FinalState data formats API
     /// This allows you to detect which version of the software was used
@@ -229,8 +268,15 @@ class PATFinalStateEvent {
     edm::RefProd<pat::TauCollection> tauRefProd_;
     edm::RefProd<pat::JetCollection> jetRefProd_;
     edm::RefProd<pat::PhotonCollection> phoRefProd_;
+    // and the gen counterparts
+    edm::RefProd<reco::GenParticleCollection> electronGenRefProd_;
+    edm::RefProd<reco::GenParticleCollection> muonGenRefProd_;
+    edm::RefProd<reco::GenParticleCollection> tauGenRefProd_;
+    edm::RefProd<reco::GenJetCollection> jetGenRefProd_;
+    edm::RefProd<reco::GenParticleCollection> phoGenRefProd_;
     reco::PFCandidateRefProd pfRefProd_;
     edm::RefProd<pat::PackedCandidateCollection> packedPFRefProd_;
+    edm::RefProd<pat::PackedGenParticleCollection> packedGenRefProd_;
     reco::TrackRefProd tracks_;
     reco::GsfTrackRefProd gsfTracks_;
     // List of different MET types

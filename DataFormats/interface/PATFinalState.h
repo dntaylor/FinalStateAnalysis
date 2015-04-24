@@ -30,7 +30,7 @@ namespace reco {
   class GenParticle;
 }
 
-
+class DressedLepton;
 
 typedef pat::PATObject<reco::LeafCandidate> PATLeafCandidate;
 

@@ -82,6 +82,9 @@ class PATFinalStateEventProducer : public edm::EDProducer {
     // miniAOD scenario
     bool miniAOD_;
 
+    // gen particles
+    bool gen_;
+
     edm::InputTag photonCoreSrc_;
     edm::InputTag gsfCoreSrc_;
 
@@ -109,6 +112,8 @@ PATFinalStateEventProducer::PATFinalStateEventProducer(
   // miniAOD check
   miniAOD_ = pset.exists("miniAOD") ?
     pset.getParameter<bool>("miniAOD") : false;
+  gen_ = pset.exists("gen") ?
+    pset.getParameter<bool>("gen") : false;
 
   rhoSrc_ = pset.getParameter<edm::InputTag>("rhoSrc");
   pvSrc_ = pset.getParameter<edm::InputTag>("pvSrc");
@@ -216,23 +221,51 @@ void PATFinalStateEventProducer::produce(edm::Event& evt,
   edm::PtrVector<reco::Vertex> verticesPtr = vertices->ptrVector();
 
   // Get refs to the objects in the event
-  edm::RefProd<pat::ElectronCollection> electronRefProd =
-    getRefProd<pat::ElectronCollection>(electronSrc_, evt);
-  edm::RefProd<pat::MuonCollection> muonRefProd =
-    getRefProd<pat::MuonCollection>(muonSrc_, evt);
-  edm::RefProd<pat::JetCollection> jetRefProd =
-    getRefProd<pat::JetCollection>(jetSrc_, evt);
-  edm::RefProd<pat::PhotonCollection> phoRefProd =
-    getRefProd<pat::PhotonCollection>(phoSrc_, evt);
-  edm::RefProd<pat::TauCollection> tauRefProd =
-    getRefProd<pat::TauCollection>(tauSrc_, evt);
+  edm::RefProd<reco::GenParticleCollection> electronGenRefProd;
+  edm::RefProd<reco::GenParticleCollection> muonGenRefProd;
+  edm::RefProd<reco::GenJetCollection> jetGenRefProd;
+  edm::RefProd<reco::GenParticleCollection> phoGenRefProd;
+  edm::RefProd<reco::GenParticleCollection> tauGenRefProd;
+  edm::RefProd<pat::ElectronCollection> electronRefProd;
+  edm::RefProd<pat::MuonCollection> muonRefProd;
+  edm::RefProd<pat::JetCollection> jetRefProd;
+  edm::RefProd<pat::PhotonCollection> phoRefProd;
+  edm::RefProd<pat::TauCollection> tauRefProd;
+  if (gen_)
+    {
+      edm::RefProd<reco::GenParticleCollection> electronGenRefProd =
+        getRefProd<reco::GenParticleCollection>(electronSrc_, evt);
+      edm::RefProd<reco::GenParticleCollection> muonGenRefProd =
+        getRefProd<reco::GenParticleCollection>(muonSrc_, evt);
+      edm::RefProd<reco::GenJetCollection> jetGenRefProd =
+        getRefProd<reco::GenJetCollection>(jetSrc_, evt);
+      edm::RefProd<reco::GenParticleCollection> phoGenRefProd =
+        getRefProd<reco::GenParticleCollection>(phoSrc_, evt);
+      edm::RefProd<reco::GenParticleCollection> tauGenRefProd =
+        getRefProd<reco::GenParticleCollection>(tauSrc_, evt);
+    }
+  else
+    {
+      edm::RefProd<pat::ElectronCollection> electronRefProd =
+        getRefProd<pat::ElectronCollection>(electronSrc_, evt);
+      edm::RefProd<pat::MuonCollection> muonRefProd =
+        getRefProd<pat::MuonCollection>(muonSrc_, evt);
+      edm::RefProd<pat::JetCollection> jetRefProd =
+        getRefProd<pat::JetCollection>(jetSrc_, evt);
+      edm::RefProd<pat::PhotonCollection> phoRefProd =
+        getRefProd<pat::PhotonCollection>(phoSrc_, evt);
+      edm::RefProd<pat::TauCollection> tauRefProd =
+        getRefProd<pat::TauCollection>(tauSrc_, evt);
+    }
   edm::RefProd<reco::PFCandidateCollection> pfRefProd;
   edm::RefProd<reco::TrackCollection> trackRefProd;
   edm::RefProd<reco::GsfTrackCollection> gsftrackRefProd;
   edm::RefProd<pat::PackedCandidateCollection> packedPFRefProd;
+  edm::RefProd<pat::PackedGenParticleCollection> packedGenRefProd;
   if(miniAOD_)
     {
-      packedPFRefProd =	getRefProd<pat::PackedCandidateCollection>(packedPFSrc_, evt);
+      packedPFRefProd = getRefProd<pat::PackedCandidateCollection>(packedPFSrc_, evt);
+      packedGenRefProd = getRefProd<pat::PackedGenParticleCollection>(packedGenSrc_, evt);
     }
   else
     {
@@ -338,18 +371,36 @@ void PATFinalStateEventProducer::produce(edm::Event& evt,
   PATFinalStateEvent* theEvent;
   if (miniAOD_) {
     pat::TriggerEvent* trg = new pat::TriggerEvent();
-    theEvent = new PATFinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
-      *trg, trigStandAlone, names, *trigPrescale, *trigResults, myPuInfo, genInfo, genParticlesRef, 
-      evt.id(), genEventInfo, generatorFilter, evt.isRealData(), puScenario_,
-      electronRefProd, muonRefProd, tauRefProd, jetRefProd,
-      phoRefProd, pfRefProd, packedPFRefProd, trackRefProd, gsftrackRefProd, theMEts);
+    if (gen_) {
+      theEvent = new PATFinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
+        *trg, trigStandAlone, names, *trigPrescale, *trigResults, myPuInfo, genInfo, genParticlesRef, 
+        evt.id(), genEventInfo, generatorFilter, evt.isRealData(), puScenario_,
+        electronGenRefProd, muonGenRefProd, tauGenRefProd, jetGenRefProd,
+        phoGenRefProd, packedGenRefProd, theMEts);
+    }
+    else {
+      theEvent = new PATFinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
+        *trg, trigStandAlone, names, *trigPrescale, *trigResults, myPuInfo, genInfo, genParticlesRef, 
+        evt.id(), genEventInfo, generatorFilter, evt.isRealData(), puScenario_,
+        electronRefProd, muonRefProd, tauRefProd, jetRefProd,
+        phoRefProd, pfRefProd, packedPFRefProd, packedGenRefProd, trackRefProd, gsftrackRefProd, theMEts);
+    }
   }
   else {
-    theEvent = new PATFinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
-      *trig, trigStandAlone, names, *trigPrescale, *trigResults, myPuInfo, genInfo, genParticlesRef, 
-      evt.id(), genEventInfo, generatorFilter, evt.isRealData(), puScenario_,
-      electronRefProd, muonRefProd, tauRefProd, jetRefProd,
-      phoRefProd, pfRefProd, packedPFRefProd, trackRefProd, gsftrackRefProd, theMEts);
+    if (gen_) {
+      theEvent = new PATFinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
+        *trig, trigStandAlone, names, *trigPrescale, *trigResults, myPuInfo, genInfo, genParticlesRef, 
+        evt.id(), genEventInfo, generatorFilter, evt.isRealData(), puScenario_,
+        electronGenRefProd, muonGenRefProd, tauGenRefProd, jetGenRefProd,
+        phoGenRefProd, packedGenRefProd, theMEts);
+    }
+    else {
+      theEvent = new PATFinalStateEvent(miniAOD_, *rho, pvPtr, verticesPtr, metPtr, metCovariance,
+        *trig, trigStandAlone, names, *trigPrescale, *trigResults, myPuInfo, genInfo, genParticlesRef, 
+        evt.id(), genEventInfo, generatorFilter, evt.isRealData(), puScenario_,
+        electronRefProd, muonRefProd, tauRefProd, jetRefProd,
+        phoRefProd, pfRefProd, packedPFRefProd, packedGenRefProd, trackRefProd, gsftrackRefProd, theMEts);
+    }
   }
 
   std::vector<std::string> extras = extraWeights_.getParameterNames();

@@ -11,6 +11,10 @@ namespace pat {
   class Photon;
 }
 
+namespace reco {
+  class DressedLepton;
+}
+
 #include "FinalStateAnalysis/DataFormats/interface/FwdIncludes.h"
 #include "FinalStateAnalysis/DataFormats/interface/Macros.h"
 
@@ -46,4 +50,9 @@ typedef PATTripletFinalStateT<pat::Muon, pat::Jet, pat::Jet> PATMuJetJetFinalSta
 FWD_TYPEDEFS(PATMuJetJetFinalState)
 typedef PATTripletFinalStateT<pat::Tau, pat::Tau, pat::Tau> PATTauTauTauFinalState;
 FWD_TYPEDEFS(PATTauTauTauFinalState)
+
+// Gen typedef
+typedef PATTripletFinalStateT<reco::DressedLepton, reco::DressedLepton, reco::DressedLepton> PATTripletGenFinalState;
+FWD_TYPEDEFS(PATTripletGenFinalState)
+ 
 #endif
