@@ -17,6 +17,8 @@
 # Set default values for the options
 HZZ=${HZZ:-0}
 
+echo "Hello"
+
 set -o errexit
 set -o nounset
 
