@@ -18,6 +18,7 @@
 HZZ=${HZZ:-0}
 
 echo "HELLO WORLD!"
+echo "AGAIN"
 
 set -o errexit
 set -o nounset
