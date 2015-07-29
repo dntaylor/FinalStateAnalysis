@@ -303,3 +303,34 @@ float  PATFinalStateEvent::jetVariables(const reco::CandidatePtr jet, const std:
   return fshelpers::jetQGVariables( jet, myvar, recoVertices_);
 }
 
+int PATFinalStateEvent::getHDecay(int higgsPdgId) const{
+  //std::cout << "Finding H++ decays" << std::endl;
+  std::vector<int> daughters;
+  for ( auto& higgs : *genParticles_ ) {
+    //if (std::abs(higgs.pdgId()) == 37 || std::abs(higgs.pdgId()) == 9900041) {
+    if (higgs.pdgId() == higgsPdgId) {
+      //std::cout << higgs.pdgId() << ":";
+      for ( size_t d=0; d<higgs.numberOfDaughters(); d++ ) {
+        reco::GenParticle daughter = *higgs.daughterRef(d);
+        //std::cout << " " << daughter.pdgId();
+        if ( std::abs(daughter.pdgId()) == 11 ) {
+          daughters.push_back(1);
+        }
+        if ( std::abs(daughter.pdgId()) == 13 ) {
+          daughters.push_back(2);
+        }
+        if ( std::abs(daughter.pdgId()) == 15 ) {
+          daughters.push_back(3);
+        }
+      }
+      //std::cout << std::endl;
+      int retVal = 0;
+      std::sort(daughters.begin(),daughters.end());
+      for (size_t i=0; i<daughters.size(); i++) {
+        retVal += pow(10,i) * daughters[i];
+      }
+      return retVal;
+    }
+  }
+  return 0;
+}

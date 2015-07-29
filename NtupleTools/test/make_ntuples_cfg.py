@@ -117,6 +117,44 @@ process.maxEvents = cms.untracked.PSet(
 
 process.schedule = cms.Schedule()
 
+#process.load("SimGeneral.HepPDTESSource.pythiapdt_cfi")
+#process.printTree = cms.EDAnalyzer("ParticleListDrawer",
+#  maxEventsToPrint = cms.untracked.int32(10),
+#  printVertex = cms.untracked.bool(False),
+#  printOnlyHardInteraction = cms.untracked.bool(False), # Print only status=3 particles. This will not work for Pythia8, which does not have any such particles.
+#  src = cms.InputTag("genParticles")
+#)
+#
+#process.printTreePath = cms.Path(process.printTree)
+#process.schedule.append(process.printTreePath)
+
+if 'DYJets' in options.inputFiles[0] or 'JetsToLL_M-50_TuneZ2Star' in options.inputFiles[0]:
+    print 'DYJets sample ==> Adding GenLeptonFSRFilter to process'
+    process.LeptonFSRVeto = cms.EDFilter("GenLeptonFSRFilter")
+
+if 'ZG' in options.inputFiles[0]:
+    print 'ZG sample ==> Adding GenLeptonFSRFilterInverse to process'
+    process.LeptonFSRVetoReverse = cms.EDFilter("GenLeptonFSRFilter")
+
+if 'HPlusPlus' in options.inputFiles[0]:
+    process.dumpGenInfo = cms.EDFilter("DoublyChargedHiggsFilter",
+        selectPairProduction=cms.bool(False),
+        selectAssociatedProduction=cms.bool(True),
+        decaysToEE=cms.untracked.int32(-1),  # if you do not want to select any decay, use "-1" in all of them
+        decaysToMM=cms.untracked.int32(-1), # if you want a specific decay this is pretty intuitive I think
+        decaysToTT=cms.untracked.int32(-1),
+        decaysToEM=cms.untracked.int32(-1),
+        decaysToET=cms.untracked.int32(-1),
+        decaysToMT=cms.untracked.int32(-1)
+        )
+    if 'HMinusMinus' in options.inputFiles[0]:
+        process.dumpGenInfo.selectPairProduction = True
+        process.dumpGenInfo.selectAssociatedProduction = False
+
+#process.filter=cms.Path(process.dumpGenInfo)
+#process.schedule.append(process.filter)
+
+
 # Check if we want to rerun creation of the FSA objects
 if options.rerunFSA:
     print "Rebuilding FS composite objects"
@@ -177,6 +215,12 @@ if options.rerunFSA:
         'mvamet': mvamet_collection,
         'fsr': 'boostedFsrPhotons',
     }
+    # embed WZ
+    process.load('FinalStateAnalysis.PatTools.electrons.patWZIDEmbedding_cfi')
+    process.electronsWZID.src = fs_daughter_inputs['electrons']
+    process.WZIDPath = cms.Path(process.electronsWZID)
+    process.schedule.append(process.WZIDPath)
+    fs_daughter_inputs['electrons'] = 'electronsWZID'
     #re run the MC matching, if requested
     if options.rerunMCMatch:
         print 'doing rematching!'
@@ -232,6 +276,8 @@ if options.rerunFSA:
                          zzMode=options.zzMode, rochCor=options.rochCor,
                          eleCor=options.eleCor)
     process.buildFSAPath = cms.Path(process.buildFSASeq)
+    if hasattr(process,'dumpGenInfo'):
+        process.buildFSAPath = cms.Path(process.dumpGenInfo*process.buildFSASeq)
     # Don't crash if some products are missing (like tracks)
     process.patFinalStateEventProducer.forbidMissing = cms.bool(False)
     process.schedule.append(process.buildFSAPath)

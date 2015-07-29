@@ -143,6 +143,12 @@ def add_ntuple(name, analyzer, process, schedule, event_view=False):
     analyzer.analysis.EventView = cms.bool(bool(event_view))
     # Make a path for this ntuple
     p = cms.Path(analyzer)
+    if hasattr(process, 'dumpGenInfo') :
+        p = cms.Path(process.dumpGenInfo*analyzer)
+    if hasattr(process, 'LeptonFSRVeto') :
+        p = cms.Path(process.LeptonFSRVeto*analyzer)
+    if hasattr(process, 'LeptonFSRVetoReverse') :
+        p = cms.Path(~process.LeptonFSRVetoReverse*analyzer)
     setattr(process, name + 'path', p)
     schedule.append(p)
 

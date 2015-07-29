@@ -313,6 +313,7 @@ def produce_final_states(process, collections, output_commands,
 
         # Define some basic selections for building combinations
         cuts = ['smallestDeltaR() > 0.3']  # basic x-cleaning
+        cuts = []
 
         producer = cms.EDProducer(
             "PAT%s%s%sFinalStateProducer" %
@@ -362,6 +363,7 @@ def produce_final_states(process, collections, output_commands,
 
         # Define some basic selections for building combinations
         cuts = ['smallestDeltaR() > 0.3']  # basic x-cleaning
+        cuts = []
 
         producer = cms.EDProducer(
             "PAT%s%s%s%sFinalStateProducer" %
@@ -413,6 +415,7 @@ def produce_final_states(process, collections, output_commands,
 
             # Define some basic selections for building combinations
             cuts = ['smallestDeltaR() > 0.3']  # basic x-cleaning
+            cuts = []
 
             producer = cms.EDProducer(
                 "PAT%s%s%s%sFinalStateHzzProducer" %

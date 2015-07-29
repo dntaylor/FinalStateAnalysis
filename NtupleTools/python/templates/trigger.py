@@ -31,10 +31,12 @@ isomu24eta2p1 = _trig_template.replace(name='isoMu24eta2p1',
 doublemu = PSet(
     _trig_template.replace(
         name='doubleMu',
-        paths=r'HLT_DoubleMu7_v\\d+,HLT_Mu13_Mu8_v\\d+,HLT_Mu17_Mu8_v\\d+'),
+        paths=r'HLT_Mu17_Mu8_v\\d+'),
+        #paths=r'HLT_DoubleMu7_v\\d+,HLT_Mu13_Mu8_v\\d+,HLT_Mu17_Mu8_v\\d+'),
     _trig_template.replace(
         name='doubleMuTrk',
-        paths=r'HLT_DoubleMu7_v\\d+,HLT_Mu13_Mu8_v\\d+,HLT_Mu17_TrkMu8_v\\d+'),
+        paths=r'HLT_Mu17_TrkMu8_v\\d+'),
+        #paths=r'HLT_DoubleMu7_v\\d+,HLT_Mu13_Mu8_v\\d+,HLT_Mu17_TrkMu8_v\\d+'),
      _trig_template.replace(
         name='mu17mu8',
         paths=r'HLT_Mu17_Mu8_v\\d+')

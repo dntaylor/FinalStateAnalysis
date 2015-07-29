@@ -20,6 +20,11 @@ vetos = PSet(
     muGlbIsoVetoPt10 = 'vetoMuons(0.4, "isGlobalMuon & isTrackerMuon & pt > 10 & abs(eta) < 2.4 & (userIso(0) + max(photonIso + neutralHadronIso - 0.5*puChargedHadronIso, 0))/pt < 0.4").size()',
     muVetoPt5IsoIdVtx = 'vetoMuons(0.4, "pt > 5 & abs(eta) < 2.4 & userInt(\'tightID\') > 0.5 & ((userIso(0) + max(photonIso()+neutralHadronIso()-0.5*puChargedHadronIso,0.0))/pt()) < 0.15 & userFloat(\'dz\') < 0.2").size()',
     muVetoPt15IsoIdVtx = 'vetoMuons(0.4, "pt > 15 & abs(eta) < 2.4 & userInt(\'tightID\') > 0.5 & ((userIso(0) + max(photonIso()+neutralHadronIso()-0.5*puChargedHadronIso,0.0))/pt()) < 0.15 & userFloat(\'dz\') < 0.2").size()',
+    muonVeto4l = 'vetoMuons(0.4, "(isGlobalMuon | isTrackerMuon) & pt > 10 & abs(eta) < 2.4 & (userIso(0) + max(photonIso + neutralHadronIso - 0.5*puChargedHadronIso, 0))/pt < 0.4 & userFloat(\'dz\') < 1.0 & userFloat(\'ip3DS\') < 4.0 & userFloat(\'ipDXY\') < 0.5").size()',
+    muonVetoWZLooseWideCone = 'vetoMuons(0.4, "userInt(\'tightID\') & pt > 10 & abs(eta) < 2.4 & (userIso(0) + max(photonIso + neutralHadronIso - 0.5*puChargedHadronIso, 0))/pt < 0.2").size()',
+    muonVetoWZTightWideCone = 'vetoMuons(0.4, "userInt(\'tightID\') & pt > 10 & abs(eta) < 2.4 & (userIso(0) + max(photonIso + neutralHadronIso - 0.5*puChargedHadronIso, 0))/pt < 0.12").size()',
+    muonVetoWZLoose = 'vetoMuons(0.1, "userInt(\'tightID\') & pt > 10 & abs(eta) < 2.4 & (userIso(0) + max(photonIso + neutralHadronIso - 0.5*puChargedHadronIso, 0))/pt < 0.2").size()',
+    muonVetoWZTight = 'vetoMuons(0.1, "userInt(\'tightID\') & pt > 10 & abs(eta) < 2.4 & (userIso(0) + max(photonIso + neutralHadronIso - 0.5*puChargedHadronIso, 0))/pt < 0.12").size()',
     
     #TAU VETOS
     #OLD DMs
@@ -38,6 +43,11 @@ vetos = PSet(
     eVetoMVAIsoVtx = 'vetoElectrons(0.4, "pt > 10 & abs(eta) < 2.5 & userInt(\'mvaidwp\') > 0.5 & ((userIso(0) + max(userIso(1) + neutralHadronIso - 0.5*userIso(2), 0))/pt) < 0.3 & userFloat(\'dz\') < 0.2").size()',
     eVetoMVAIso = 'vetoElectrons(0.4, "pt > 10 & abs(eta) < 2.5 & userInt(\'mvaidwp\') > 0.5 & (userIso(0) + max(userIso(1) + neutralHadronIso - 0.5*userIso(2), 0))/pt < 0.3").size()',
     eVetoCicTightIso = 'vetoElectrons(0.4, "pt > 10 & abs(eta) < 2.5 &  test_bit(electronID(\'cicTight\'), 0) > 0.5 & (userIso(0) + max(userIso(1) + neutralHadronIso - 0.5*userIso(2), 0))/pt < 0.3").size()',
+    elecVeto4l = 'vetoElectrons(0.4, "pt > 10 & abs(eta) < 2.5 & userInt(\'mvaidwp\') > 0.5 & ((userIso(0) + max(userIso(1) + neutralHadronIso - 0.5*userIso(2), 0))/pt) < 0.4 & userFloat(\'dz\') < 1.0 & userFloat(\'ip3DS\') < 4.0 & userFloat(\'ipDXY\') < 0.5 & gsfTrack.trackerExpectedHitsInner.numberOfHits() <= 1").size()',
+    elecVetoWZLooseWideCone = 'vetoElectrons(0.4, "userFloat(\'WZID\') & !userFloat(\'hasConversion\') & pt > 10 & abs(eta) < 2.5 & (userIso(0) + max(userIso(1) + neutralHadronIso - 0.5*userIso(2), 0))/pt < 0.2").size()',
+    elecVetoWZTightWideCone = 'vetoElectrons(0.4, "userFloat(\'WZID\') & !userFloat(\'hasConversion\') & pt > 10 & abs(eta) < 2.5 & userFloat(\'ipDXY\')<0.02 & userFloat(\'dz\')<0.1 & ((abs(superCluster().eta())<0.8 & electronID(\'mvaTrigV0\')>0.94) | (0.8<abs(superCluster().eta())<1.479 & electronID(\'mvaTrigV0\')>0.85) | (abs(superCluster().eta())>1.479 & electronID(\'mvaTrigV0\')>0.92)) & (userIso(0) + max(userIso(1) + neutralHadronIso - 0.5*userIso(2), 0))/pt < 0.15").size()',
+    elecVetoWZLoose = 'vetoElectrons(0.1, "userFloat(\'WZID\') & !userFloat(\'hasConversion\') & pt > 10 & abs(eta) < 2.5 & (userIso(0) + max(userIso(1) + neutralHadronIso - 0.5*userIso(2), 0))/pt < 0.2").size()',
+    elecVetoWZTight = 'vetoElectrons(0.1, "userFloat(\'WZID\') & !userFloat(\'hasConversion\') & pt > 10 & abs(eta) < 2.5 & userFloat(\'ipDXY\')<0.02 & userFloat(\'dz\')<0.1 & ((abs(superCluster().eta())<0.8 & electronID(\'mvaTrigV0\')>0.94) | (0.8<abs(superCluster().eta())<1.479 & electronID(\'mvaTrigV0\')>0.85) | (abs(superCluster().eta())>1.479 & electronID(\'mvaTrigV0\')>0.92)) & (userIso(0) + max(userIso(1) + neutralHadronIso - 0.5*userIso(2), 0))/pt < 0.15").size()',
     
     #B-JET Vetos
     bjetVeto = 'vetoJets(0.4, "pt > 20 & abs(eta) < 2.4  & userInt(\'fullIdLoose\') & bDiscriminator(\'\') > 3.3").size()',

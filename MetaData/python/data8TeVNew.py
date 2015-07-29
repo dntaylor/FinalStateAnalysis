@@ -39,6 +39,30 @@ except:
 data_name_map = {}
 
 datadefs = {
+   'ZZ_TuneZ2star_8TeV_pythia6_tauola' : {
+   'analyses': [],
+   'datasetpath' : "/ZZ_TuneZ2star_8TeV_pythia6_tauola/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM",
+   'x_sec' : -999,
+   'pu' : 'S10',
+   'calibrationTarget':'Summer12_DR53X_HCP2012'
+   },
+
+   'WZ_TuneZ2star_8TeV_pythia6_tauola' : {
+   'analyses': [],
+   'datasetpath' : "/WZ_TuneZ2star_8TeV_pythia6_tauola/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM",
+   'x_sec' : -999,
+   'pu' : 'S10',
+   'calibrationTarget':'Summer12_DR53X_HCP2012'
+   },
+
+   'WW_TuneZ2star_8TeV_pythia6_tauola' : {
+   'analyses': [],
+   'datasetpath' : "/WW_TuneZ2star_8TeV_pythia6_tauola/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM",
+   'x_sec' : -999,
+   'pu' : 'S10',
+   'calibrationTarget':'Summer12_DR53X_HCP2012'
+   },
+
    'WZJetsTo3LNu_TuneZ2_8TeV-madgraph-tauola' : {
    'analyses': ['HTT'],
    'datasetpath' : "/WZJetsTo3LNu_TuneZ2_8TeV-madgraph-tauola/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM",
@@ -58,6 +82,14 @@ datadefs = {
    'ZZJetsTo2L2Nu_TuneZ2star_8TeV-madgraph-tauola' : {
    'analyses': ['HTT'],
    'datasetpath' : "/ZZJetsTo2L2Nu_TuneZ2star_8TeV-madgraph-tauola/Summer12_DR53X-PU_S10_START53_V7A-v3/AODSIM",
+   'x_sec' : -999,
+   'pu' : 'S10',
+    'calibrationTarget':'Summer12_DR53X_HCP2012'
+   },
+
+   'WZJetsTo2QLNu_8TeV-madgraph' : {
+   'analyses': ['HTT'],
+   'datasetpath' : "/WZJetsTo2QLNu_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7C-v1/AODSIM",
    'x_sec' : -999,
    'pu' : 'S10',
     'calibrationTarget':'Summer12_DR53X_HCP2012'
@@ -121,38 +153,36 @@ datadefs = {
    'datasetpath': '/DYJetsToLL_M-50_TuneZ2Star_8TeV-madgraph-tarball/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
    'pu': 'S10',
    'calibrationTarget': 'Summer12',
-   'xsec': -999,
+   'x_sec': -999,
    },
     'Z2jets_M50_S10' : {
         'analyses': ['ET'],
         'datasetpath': '/DY2JetsToLL_M-50_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7C-v1/AODSIM',
         'pu': 'S10',
         'calibrationTarget': 'Summer12',
-        'xsec': -999,
+        'x_sec': -999,
     },
     'Z3jets_M50' : {
         'analyses': ['ET'],
         'datasetpath': '/DY3JetsToLL_M-50_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
         'pu': 'S10',
         'calibrationTarget': 'Summer12',
-        'xsec': -999,
+        'x_sec': -999,
     },
     'Z4jets_M50' : {
         'analyses': ['ET'],
         'datasetpath': '/DY4JetsToLL_M-50_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
         'pu': 'S10',
         'calibrationTarget': 'Summer12',
-        'xsec': -999,
+        'x_sec': -999,
     },
     'Z1jets_M50' : {
         'analyses': ['ET'],
         'datasetpath': '/DY1JetsToLL_M-50_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
         'pu': 'S10',
         'calibrationTarget': 'Summer12',
-        'xsec': -999,
+        'x_sec': -999,
     },
-
-
 
 
    'Tbar_s-channel_TuneZ2star_8TeV-powheg-tauola' : {
@@ -225,10 +255,34 @@ datadefs = {
     'calibrationTarget':'Summer12_DR53X_HCP2012'
    },
 
+   'WJetsToLNu_TuneZ2Star_8TeV-madgraph-tarball-v1' : {
+   'analyses': ['HTT','HZG'],
+   'datasetpath' : "/WJetsToLNu_TuneZ2Star_8TeV-madgraph-tarball/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM",
+   'x_sec' : 36257.2*picobarns,
+   'pu' : 'S10',
+    'calibrationTarget':'Summer12_DR53X_HCP2012'
+   },
+
+   'WJetsToLNu_TuneZ2Star_8TeV-madgraph-tarball-v2' : {
+   'analyses': ['HTT','HZG'],
+   'datasetpath' : "/WJetsToLNu_TuneZ2Star_8TeV-madgraph-tarball/Summer12_DR53X-PU_S10_START53_V7A-v2/AODSIM",
+   'x_sec' : 36257.2*picobarns,
+   'pu' : 'S10',
+    'calibrationTarget':'Summer12_DR53X_HCP2012'
+   },
+
    'DYJetsToLL_M-10To50filter_8TeV-madgraph' : {
    'analyses': ['ZZ'],
    'datasetpath' : "/DYJetsToLL_M-10To50filter_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM",
    'x_sec' : 915.0*picobarns,
+   'pu' : 'S10',
+    'calibrationTarget':'Summer12_DR53X_HCP2012'
+   },
+
+   'ZGToLLG_8TeV-madgraph' : {
+   'analyses': ['ZZ'],
+   'datasetpath' : "/ZGToLLG_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM",
+   'x_sec' : -999,
    'pu' : 'S10',
     'calibrationTarget':'Summer12_DR53X_HCP2012'
    },
@@ -295,20 +349,20 @@ datadefs = {
     'calibrationTarget':'Summer12_DR53X_HCP2012'
    },
 
-   'ggZZ4L' : {
+   'GluGluToZZTo4L_8TeV-gg2zz-pythia6' : {
    'analyses': ['4L'],
    'datasetpath': '/GluGluToZZTo4L_8TeV-gg2zz-pythia6/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
    'pu': 'S7',
-   'xsec': -999,
+   'x_sec': -999,
    'calibrationTarget': 'Summer12_DR53X_HCP2012',
    'responsible' : 'Ian',
    },
 
-   'ggZZ2L2L' : {
+   'GluGluToZZTo2L2L_TuneZ2star_8TeV-gg2zz-pythia6' : {
    'analyses': ['4L'],
    'datasetpath': '/GluGluToZZTo2L2L_TuneZ2star_8TeV-gg2zz-pythia6/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
    'pu': 'S7',
-   'xsec': -999,
+   'x_sec': -999,
    'calibrationTarget': 'Summer12_DR53X_HCP2012',
    'responsible' : 'Ian',
    },
@@ -411,37 +465,23 @@ datadefs = {
     'calibrationTarget':'Summer12_DR53X_HCP2012'
    },
 
-    'Wplus1Jets_madgraph' : {
+    'W1JetsToLNu_TuneZ2Star_8TeV-madgraph' : {
         'analyses': ['HTT'],
         'datasetpath': '/W1JetsToLNu_TuneZ2Star_8TeV-madgraph-tarball/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
         'pu': 'S10',
         'calibrationTarget': 'Summer12',
         'x_sec': 6662.8,
     },
-    'Wplus1Jets_madgraph_tapas' : {
-        'analyses': ['ET'],
-        'datasetpath': '/W1JetsToLNu_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V19-v1/AODSIM',
-        'pu': 'S10',
-        'calibrationTarget': 'Summer12',
-        'x_sec': 6662.8,
-    },
 
-    'Wplus2Jets_madgraph' : {
+    'W2JetsToLNu_TuneZ2Star_8TeV-madgraph' : {
         'analyses': ['HTT'],
         'datasetpath': '/W2JetsToLNu_TuneZ2Star_8TeV-madgraph-tarball/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
         'pu': 'S7',
         'calibrationTarget': 'Summer12',
         'x_sec': 2159.2,
     },
-      'Wplus2Jets_madgraph_tapas' : {
-            'analyses': ['HTT'],
-            'datasetpath': '/W2JetsToLNu_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V19-v1/AODSIM',
-            'pu': 'S10',
-            'calibrationTarget': 'Summer12',
-            'x_sec': 2159.2,
-      },
 
-    'Wplus3Jets_madgraph_v1' : {
+    'W3JetsToLNu_TuneZ2Star_8TeV-madgraph' : {
         'analyses': ['HTT'],
         'datasetpath': '/W3JetsToLNu_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
         'pu': 'S7',
@@ -449,16 +489,7 @@ datadefs = {
         'x_sec': 640.4,
     },
 
-    'Wplus3Jets_madgraph_v2' : {
-        'analyses': ['HTT'],
-        'datasetpath': '/W3JetsToLNu_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V19-v1/AODSIM',
-        'pu': 'S7',
-        'calibrationTarget': 'Summer12',
-        'x_sec': 640.4,
-    },
-                        
-
-    'Wplus4Jets_madgraph' : {
+    'W4JetsToLNu_TuneZ2Star_8TeV-madgraph' : {
         'analyses': ['HTT'],
         'datasetpath': '/W4JetsToLNu_TuneZ2Star_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
         'pu': 'S7',
@@ -522,12 +553,44 @@ datadefs = {
         'x_sec': 0.0633,
     },
 
+    'WZZNoGstarJets' : {
+        'analyses': [],
+        'datasetpath': '/WZZNoGstarJets_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
+        'pu': 'S10',
+        'calibrationTarget': 'Summer12',
+        'x_sec': 0.0192,
+    },
+
     'WWGJets' : {
         'analyses': [],
         'datasetpath': '/WWGJets_8TeV-madgraph/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
         'pu': 'S10',
         'calibrationTarget': 'Summer12',
         'x_sec': 1.44,
+    },
+
+    'WGstarToLNu2E_TuneZ2star_8TeV-madgraph-tauola' : {
+        'analyses': [],
+        'datasetpath': '/WGstarToLNu2E_TuneZ2star_8TeV-madgraph-tauola/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
+        'pu': 'S10',
+        'calibrationTarget': 'Summer12',
+        'x_sec': 5.87,
+    },
+
+    'WGstarToLNu2Mu_TuneZ2star_8TeV-madgraph-tauola' : {
+        'analyses': [],
+        'datasetpath': '/WGstarToLNu2Mu_TuneZ2star_7TeV-madgraph-tauola/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
+        'pu': 'S10',
+        'calibrationTarget': 'Summer12',
+        'x_sec': 1.91,
+    },
+
+    'WGToLNuG_TuneZ2star_8TeV-madgraph-tauola' : {
+        'analyses': [],
+        'datasetpath': '/WGToLNuG_TuneZ2star_8TeV-madgraph-tauola/Summer12_DR53X-PU_S10_START53_V7A-v1/AODSIM',
+        'pu': 'S10',
+        'calibrationTarget': 'Summer12',
+        'x_sec': 461.6,
     },
 
 

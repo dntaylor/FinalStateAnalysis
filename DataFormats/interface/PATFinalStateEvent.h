@@ -179,6 +179,8 @@ class PATFinalStateEvent {
     /// incremented after each change to the data format.
     char version() const { return fsaDataFormatVersion_; }
     float jetVariables(const reco::CandidatePtr jet, const std::string& myvar) const;
+
+    int getHDecay(int higgsPdgId) const;
       
   private:
     std::map<std::string, float> weights_;

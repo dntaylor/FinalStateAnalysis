@@ -17,6 +17,7 @@ from FinalStateAnalysis.Utilities.cfgtools import PSet
 # ID and isolation
 id = PSet(
     objectWWID = '{object}.userFloat("WWID")',
+    objectWZIDLoose = '{object}.userFloat("WZID")',
     objectMITID = '{object}.userFloat("MITID")',
     objectMVANonTrig = '{object}.electronID("mvaNonTrigV0")',
     objectMVATrig = '{object}.electronID("mvaTrigV0")',

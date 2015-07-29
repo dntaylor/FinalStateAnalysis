@@ -3,6 +3,8 @@ from FinalStateAnalysis.Utilities.version import cmssw_major_version
 
 from FinalStateAnalysis.PatTools.electrons.patWWIDEmbedding_cfi import \
         electronsWWID
+from FinalStateAnalysis.PatTools.electrons.patWZIDEmbedding_cfi import \
+        electronsWZID
 from FinalStateAnalysis.PatTools.electrons.patElectronVBTFEmbedding_cff import \
         electronsWP80, electronsWP90, electronsWP95, electronsWP95V, electronsVBTFId
 
@@ -51,6 +53,7 @@ customizeElectronSequence += patElectronHZGRho2012Embedding
 if cmssw_major_version() == 5:
 	customizeElectronSequence += patElectronZZ2012RhoEmbedding
 customizeElectronSequence += electronsWWID
+customizeElectronSequence += electronsWZID
 customizeElectronSequence += electronsVBTFId
 customizeElectronSequence += patElectronsEmbedJetInfo
 customizeElectronSequence += electronSystematics
