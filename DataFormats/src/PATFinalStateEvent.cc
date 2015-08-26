@@ -304,6 +304,8 @@ float  PATFinalStateEvent::jetVariables(const reco::CandidatePtr jet, const std:
 }
 
 int PATFinalStateEvent::getHDecay(int higgsPdgId) const{
+  if (isRealData_)
+    return 0;
   //std::cout << "Finding H++ decays" << std::endl;
   std::vector<int> daughters;
   for ( auto& higgs : *genParticles_ ) {
